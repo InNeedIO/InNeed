@@ -34,5 +34,65 @@
     "resource": "User",
     "action": "read:any",
     "attributes": "*"
+  },
+  {
+    "role": "needy",
+    "resource": "Need",
+    "action": "read:own",
+    "attributes": "*"
+  },
+  {
+    "role": "helper",
+    "resource": "Need",
+    "action": "read:own",
+    "attributes": "*"
+  },
+  {
+    "role": "needy",
+    "resource": "Need",
+    "action": "create:any",
+    "attributes": "*"
+  },
+  {
+    "role": "helper",
+    "resource": "Need",
+    "action": "create:any",
+    "attributes": "*"
+  },
+  {
+    "role": "needy",
+    "resource": "Need",
+    "action": "update:any",
+    "attributes": "*"
+  },
+  {
+    "role": "helper",
+    "resource": "Need",
+    "action": "update:any",
+    "attributes": "*"
+  },
+  {
+    "role": "needy",
+    "resource": "Need",
+    "action": "delete:any",
+    "attributes": "*"
+  },
+  {
+    "role": "helper",
+    "resource": "Need",
+    "action": "delete:any",
+    "attributes": "*"
+  },
+  {
+    "role": "needy",
+    "resource": "Need",
+    "action": "read:any",
+    "attributes": "*"
+  },
+  {
+    "role": "helper",
+    "resource": "Need",
+    "action": "read:any",
+    "attributes": "*"
   }
 ]
