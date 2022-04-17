@@ -17,3 +17,18 @@ model User {
   updatedAt DateTime @updatedAt
   username  String   @unique
 }
+
+model Need {
+  createdAt   DateTime         @default(now())
+  description String
+  id          String           @id @default(cuid())
+  isOffer     Boolean
+  needType    EnumNeedNeedType
+  title       String
+  updatedAt   DateTime         @updatedAt
+}
+
+enum EnumNeedNeedType {
+  Home
+  Work
+}
