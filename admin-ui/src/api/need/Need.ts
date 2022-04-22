@@ -3,7 +3,7 @@ export type Need = {
   description: string;
   id: string;
   isOffer: boolean;
-  needType?: "Home" | "Work";
+  needType?: "Home" | "Work" | "Transport";
   title: string;
   updatedAt: Date;
 };

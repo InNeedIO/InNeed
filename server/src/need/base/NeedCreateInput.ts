@@ -37,7 +37,7 @@ class NeedCreateInput {
   })
   @IsEnum(EnumNeedNeedType)
   @Field(() => EnumNeedNeedType)
-  needType!: "Home" | "Work";
+  needType!: "Home" | "Work" | "Transport";
 
   @ApiProperty({
     required: true,

@@ -14,6 +14,7 @@ import { registerEnumType } from "@nestjs/graphql";
 export enum EnumNeedNeedType {
   Home = "Home",
   Work = "Work",
+  Transport = "Transport",
 }
 
 registerEnumType(EnumNeedNeedType, {

@@ -31,4 +31,5 @@ model Need {
 enum EnumNeedNeedType {
   Home
   Work
+  Transport
 }

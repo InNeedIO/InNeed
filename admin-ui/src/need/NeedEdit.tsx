@@ -20,6 +20,7 @@ export const NeedEdit = (props: EditProps): React.ReactElement => {
           choices={[
             { label: "Home", value: "Home" },
             { label: "Work", value: "Work" },
+            { label: "Transport", value: "Transport" },
           ]}
           optionText="label"
           optionValue="value"
