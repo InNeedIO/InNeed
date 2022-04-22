@@ -5,6 +5,6 @@ export type NeedWhereInput = {
   description?: StringFilter;
   id?: StringFilter;
   isOffer?: BooleanFilter;
-  needType?: "Home" | "Work";
+  needType?: "Home" | "Work" | "Transport";
   title?: StringFilter;
 };

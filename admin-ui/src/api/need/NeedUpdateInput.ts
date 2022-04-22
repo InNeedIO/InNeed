@@ -1,6 +1,6 @@
 export type NeedUpdateInput = {
   description?: string;
   isOffer?: boolean;
-  needType?: "Home" | "Work";
+  needType?: "Home" | "Work" | "Transport";
   title?: string;
 };

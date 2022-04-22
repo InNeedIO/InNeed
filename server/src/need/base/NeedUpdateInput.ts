@@ -46,7 +46,7 @@ class NeedUpdateInput {
   @Field(() => EnumNeedNeedType, {
     nullable: true,
   })
-  needType?: "Home" | "Work";
+  needType?: "Home" | "Work" | "Transport";
 
   @ApiProperty({
     required: false,
