@@ -1,11 +1,5 @@
 [
   {
-    "role": "user",
-    "resource": "User",
-    "action": "read:own",
-    "attributes": "*"
-  },
-  {
     "role": "needy",
     "resource": "User",
     "action": "read:own",
@@ -20,7 +14,13 @@
   {
     "role": "user",
     "resource": "User",
-    "action": "create:any",
+    "action": "read:own",
+    "attributes": "*"
+  },
+  {
+    "role": "admin",
+    "resource": "User",
+    "action": "read:own",
     "attributes": "*"
   },
   {
@@ -38,7 +38,13 @@
   {
     "role": "user",
     "resource": "User",
-    "action": "update:any",
+    "action": "create:any",
+    "attributes": "*"
+  },
+  {
+    "role": "admin",
+    "resource": "User",
+    "action": "create:any",
     "attributes": "*"
   },
   {
@@ -56,7 +62,13 @@
   {
     "role": "user",
     "resource": "User",
-    "action": "delete:any",
+    "action": "update:any",
+    "attributes": "*"
+  },
+  {
+    "role": "admin",
+    "resource": "User",
+    "action": "update:any",
     "attributes": "*"
   },
   {
@@ -69,6 +81,30 @@
     "role": "helper",
     "resource": "User",
     "action": "delete:any",
+    "attributes": "*"
+  },
+  {
+    "role": "user",
+    "resource": "User",
+    "action": "delete:any",
+    "attributes": "*"
+  },
+  {
+    "role": "admin",
+    "resource": "User",
+    "action": "delete:any",
+    "attributes": "*"
+  },
+  {
+    "role": "needy",
+    "resource": "User",
+    "action": "read:any",
+    "attributes": "*"
+  },
+  {
+    "role": "helper",
+    "resource": "User",
+    "action": "read:any",
     "attributes": "*"
   },
   {
@@ -78,24 +114,12 @@
     "attributes": "*"
   },
   {
-    "role": "needy",
+    "role": "admin",
     "resource": "User",
     "action": "read:any",
     "attributes": "*"
   },
   {
-    "role": "helper",
-    "resource": "User",
-    "action": "read:any",
-    "attributes": "*"
-  },
-  {
-    "role": "user",
-    "resource": "Need",
-    "action": "read:own",
-    "attributes": "*"
-  },
-  {
     "role": "needy",
     "resource": "Need",
     "action": "read:own",
@@ -110,7 +134,13 @@
   {
     "role": "user",
     "resource": "Need",
-    "action": "create:any",
+    "action": "read:own",
+    "attributes": "*"
+  },
+  {
+    "role": "admin",
+    "resource": "Need",
+    "action": "read:own",
     "attributes": "*"
   },
   {
@@ -128,7 +158,13 @@
   {
     "role": "user",
     "resource": "Need",
-    "action": "update:any",
+    "action": "create:any",
+    "attributes": "*"
+  },
+  {
+    "role": "admin",
+    "resource": "Need",
+    "action": "create:any",
     "attributes": "*"
   },
   {
@@ -146,7 +182,13 @@
   {
     "role": "user",
     "resource": "Need",
-    "action": "delete:any",
+    "action": "update:any",
+    "attributes": "*"
+  },
+  {
+    "role": "admin",
+    "resource": "Need",
+    "action": "update:any",
     "attributes": "*"
   },
   {
@@ -164,7 +206,13 @@
   {
     "role": "user",
     "resource": "Need",
-    "action": "read:any",
+    "action": "delete:any",
+    "attributes": "*"
+  },
+  {
+    "role": "admin",
+    "resource": "Need",
+    "action": "delete:any",
     "attributes": "*"
   },
   {
@@ -175,6 +223,18 @@
   },
   {
     "role": "helper",
+    "resource": "Need",
+    "action": "read:any",
+    "attributes": "*"
+  },
+  {
+    "role": "user",
+    "resource": "Need",
+    "action": "read:any",
+    "attributes": "*"
+  },
+  {
+    "role": "admin",
     "resource": "Need",
     "action": "read:any",
     "attributes": "*"
