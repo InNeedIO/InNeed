@@ -1,5 +1,11 @@
 [
   {
+    "role": "user",
+    "resource": "User",
+    "action": "read:own",
+    "attributes": "*"
+  },
+  {
     "role": "needy",
     "resource": "User",
     "action": "read:own",
@@ -12,6 +18,30 @@
     "attributes": "*"
   },
   {
+    "role": "user",
+    "resource": "User",
+    "action": "create:any",
+    "attributes": "*"
+  },
+  {
+    "role": "needy",
+    "resource": "User",
+    "action": "create:any",
+    "attributes": "*"
+  },
+  {
+    "role": "helper",
+    "resource": "User",
+    "action": "create:any",
+    "attributes": "*"
+  },
+  {
+    "role": "user",
+    "resource": "User",
+    "action": "update:any",
+    "attributes": "*"
+  },
+  {
     "role": "needy",
     "resource": "User",
     "action": "update:any",
@@ -21,6 +51,30 @@
     "role": "helper",
     "resource": "User",
     "action": "update:any",
+    "attributes": "*"
+  },
+  {
+    "role": "user",
+    "resource": "User",
+    "action": "delete:any",
+    "attributes": "*"
+  },
+  {
+    "role": "needy",
+    "resource": "User",
+    "action": "delete:any",
+    "attributes": "*"
+  },
+  {
+    "role": "helper",
+    "resource": "User",
+    "action": "delete:any",
+    "attributes": "*"
+  },
+  {
+    "role": "user",
+    "resource": "User",
+    "action": "read:any",
     "attributes": "*"
   },
   {
@@ -36,6 +90,12 @@
     "attributes": "*"
   },
   {
+    "role": "user",
+    "resource": "Need",
+    "action": "read:own",
+    "attributes": "*"
+  },
+  {
     "role": "needy",
     "resource": "Need",
     "action": "read:own",
@@ -45,6 +105,12 @@
     "role": "helper",
     "resource": "Need",
     "action": "read:own",
+    "attributes": "*"
+  },
+  {
+    "role": "user",
+    "resource": "Need",
+    "action": "create:any",
     "attributes": "*"
   },
   {
@@ -60,6 +126,12 @@
     "attributes": "*"
   },
   {
+    "role": "user",
+    "resource": "Need",
+    "action": "update:any",
+    "attributes": "*"
+  },
+  {
     "role": "needy",
     "resource": "Need",
     "action": "update:any",
@@ -72,6 +144,12 @@
     "attributes": "*"
   },
   {
+    "role": "user",
+    "resource": "Need",
+    "action": "delete:any",
+    "attributes": "*"
+  },
+  {
     "role": "needy",
     "resource": "Need",
     "action": "delete:any",
@@ -81,6 +159,12 @@
     "role": "helper",
     "resource": "Need",
     "action": "delete:any",
+    "attributes": "*"
+  },
+  {
+    "role": "user",
+    "resource": "Need",
+    "action": "read:any",
     "attributes": "*"
   },
   {
