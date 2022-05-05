@@ -2,8 +2,13 @@ import { StringNullableFilter } from "../../util/StringNullableFilter";
 import { StringFilter } from "../../util/StringFilter";
 
 export type UserWhereInput = {
-  firstName?: StringNullableFilter;
+  description?: StringNullableFilter;
+  email?: StringFilter;
+  first_name?: StringFilter;
   id?: StringFilter;
-  lastName?: StringNullableFilter;
+  last_name?: StringNullableFilter;
+  location?: StringFilter;
+  telephone_number?: StringFilter;
   username?: StringFilter;
+  user_type?: StringFilter;
 };

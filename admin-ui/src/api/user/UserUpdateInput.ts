@@ -1,7 +1,12 @@
 export type UserUpdateInput = {
-  firstName?: string | null;
-  lastName?: string | null;
+  description?: string | null;
+  email?: string;
+  first_name?: string;
+  last_name?: string | null;
+  location?: string;
   password?: string;
   roles?: Array<string>;
+  telephone_number?: string;
   username?: string;
+  user_type?: string;
 };

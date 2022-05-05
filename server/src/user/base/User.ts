@@ -11,18 +11,9 @@ https://docs.amplication.com/docs/how-to/custom-code
   */
 import { ObjectType, Field } from "@nestjs/graphql";
 import { ApiProperty } from "@nestjs/swagger";
-import { IsDate, IsString, IsOptional } from "class-validator";
-import { Type } from "class-transformer";
+import { IsString, IsOptional } from "class-validator";
 @ObjectType()
 class User {
-  @ApiProperty({
-    required: true,
-  })
-  @IsDate()
-  @Type(() => Date)
-  @Field(() => Date)
-  createdAt!: Date;
-
   @ApiProperty({
     required: false,
     type: String,
@@ -32,7 +23,23 @@ class User {
   @Field(() => String, {
     nullable: true,
   })
-  firstName!: string | null;
+  description!: string | null;
+
+  @ApiProperty({
+    required: true,
+    type: String,
+  })
+  @IsString()
+  @Field(() => String)
+  email!: string;
+
+  @ApiProperty({
+    required: true,
+    type: String,
+  })
+  @IsString()
+  @Field(() => String)
+  first_name!: string;
 
   @ApiProperty({
     required: true,
@@ -51,7 +58,15 @@ class User {
   @Field(() => String, {
     nullable: true,
   })
-  lastName!: string | null;
+  last_name!: string | null;
+
+  @ApiProperty({
+    required: true,
+    type: String,
+  })
+  @IsString()
+  @Field(() => String)
+  location!: string;
 
   @ApiProperty({
     required: true,
@@ -65,11 +80,11 @@ class User {
 
   @ApiProperty({
     required: true,
+    type: String,
   })
-  @IsDate()
-  @Type(() => Date)
-  @Field(() => Date)
-  updatedAt!: Date;
+  @IsString()
+  @Field(() => String)
+  telephone_number!: string;
 
   @ApiProperty({
     required: true,
@@ -78,5 +93,13 @@ class User {
   @IsString()
   @Field(() => String)
   username!: string;
+
+  @ApiProperty({
+    required: true,
+    type: String,
+  })
+  @IsString()
+  @Field(() => String)
+  user_type!: string;
 }
 export { User };

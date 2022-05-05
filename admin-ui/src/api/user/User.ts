@@ -1,9 +1,12 @@
 export type User = {
-  createdAt: Date;
-  firstName: string | null;
+  description: string | null;
+  email: string;
+  first_name: string;
   id: string;
-  lastName: string | null;
+  last_name: string | null;
+  location: string;
   roles: Array<string>;
-  updatedAt: Date;
+  telephone_number: string;
   username: string;
+  user_type: string;
 };

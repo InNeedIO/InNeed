@@ -8,14 +8,17 @@ generator client {
 }
 
 model User {
-  createdAt DateTime @default(now())
-  firstName String?
-  id        String   @id @default(cuid())
-  lastName  String?
-  password  String
-  roles     String[]
-  updatedAt DateTime @updatedAt
-  username  String   @unique
+  description      String?
+  email            String   @unique
+  first_name       String
+  id               String   @id @default(cuid())
+  last_name        String?
+  location         String
+  password         String
+  roles            String[]
+  telephone_number String
+  username         String   @unique
+  user_type        String
 }
 
 model Need {
@@ -26,6 +29,42 @@ model Need {
   needType    EnumNeedNeedType
   title       String
   updatedAt   DateTime         @updatedAt
+}
+
+model JobApplicant {
+  id              String @id @default(cuid())
+  job_offering_id Int
+  user_id         Int
+}
+
+model JobOffering {
+  author_id      Int
+  city           String
+  description    String
+  id             String  @id @default(cuid())
+  max_salary     Int?
+  min_salary     Int?
+  position_level String?
+  title          String
+  working_mode   String
+}
+
+model HousingOffering {
+  address      String
+  author_id    Int
+  city         String
+  description  String
+  id           String @id @default(cuid())
+  price        Int
+  rooms_number Int
+  size         Float
+  title        String
+}
+
+model HousingApplicant {
+  house_offeringI_id Int
+  id                 String @id @default(cuid())
+  user_id            Int
 }
 
 enum EnumNeedNeedType {
