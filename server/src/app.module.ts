@@ -1,6 +1,10 @@
 import { Module } from "@nestjs/common";
 import { UserModule } from "./user/user.module";
 import { NeedModule } from "./need/need.module";
+import { JobApplicantModule } from "./jobApplicant/jobApplicant.module";
+import { JobOfferingModule } from "./jobOffering/jobOffering.module";
+import { HousingOfferingModule } from "./housingOffering/housingOffering.module";
+import { HousingApplicantModule } from "./housingApplicant/housingApplicant.module";
 import { ACLModule } from "./auth/acl.module";
 import { AuthModule } from "./auth/auth.module";
 import { HealthModule } from "./health/health.module";
@@ -16,6 +20,10 @@ import { GraphQLModule } from "@nestjs/graphql";
   imports: [
     UserModule,
     NeedModule,
+    JobApplicantModule,
+    JobOfferingModule,
+    HousingOfferingModule,
+    HousingApplicantModule,
     ACLModule,
     AuthModule,
     HealthModule,

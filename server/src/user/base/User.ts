@@ -11,18 +11,14 @@ https://docs.amplication.com/docs/how-to/custom-code
   */
 import { ObjectType, Field } from "@nestjs/graphql";
 import { ApiProperty } from "@nestjs/swagger";
-import { IsDate, IsString, IsOptional } from "class-validator";
+import { IsString, IsOptional, ValidateNested } from "class-validator";
+import { HousingApplicant } from "../../housingApplicant/base/HousingApplicant";
 import { Type } from "class-transformer";
+import { HousingOffering } from "../../housingOffering/base/HousingOffering";
+import { JobApplicant } from "../../jobApplicant/base/JobApplicant";
+import { JobOffering } from "../../jobOffering/base/JobOffering";
 @ObjectType()
 class User {
-  @ApiProperty({
-    required: true,
-  })
-  @IsDate()
-  @Type(() => Date)
-  @Field(() => Date)
-  createdAt!: Date;
-
   @ApiProperty({
     required: false,
     type: String,
@@ -32,7 +28,41 @@ class User {
   @Field(() => String, {
     nullable: true,
   })
-  firstName!: string | null;
+  description!: string | null;
+
+  @ApiProperty({
+    required: true,
+    type: String,
+  })
+  @IsString()
+  @Field(() => String)
+  email!: string;
+
+  @ApiProperty({
+    required: true,
+    type: String,
+  })
+  @IsString()
+  @Field(() => String)
+  first_name!: string;
+
+  @ApiProperty({
+    required: false,
+    type: () => [HousingApplicant],
+  })
+  @ValidateNested()
+  @Type(() => HousingApplicant)
+  @IsOptional()
+  housing_applicants?: Array<HousingApplicant>;
+
+  @ApiProperty({
+    required: false,
+    type: () => [HousingOffering],
+  })
+  @ValidateNested()
+  @Type(() => HousingOffering)
+  @IsOptional()
+  housing_offerings?: Array<HousingOffering>;
 
   @ApiProperty({
     required: true,
@@ -44,6 +74,24 @@ class User {
 
   @ApiProperty({
     required: false,
+    type: () => [JobApplicant],
+  })
+  @ValidateNested()
+  @Type(() => JobApplicant)
+  @IsOptional()
+  job_applicants?: Array<JobApplicant>;
+
+  @ApiProperty({
+    required: false,
+    type: () => [JobOffering],
+  })
+  @ValidateNested()
+  @Type(() => JobOffering)
+  @IsOptional()
+  job_offerings?: Array<JobOffering>;
+
+  @ApiProperty({
+    required: false,
     type: String,
   })
   @IsString()
@@ -51,7 +99,15 @@ class User {
   @Field(() => String, {
     nullable: true,
   })
-  lastName!: string | null;
+  last_name!: string | null;
+
+  @ApiProperty({
+    required: true,
+    type: String,
+  })
+  @IsString()
+  @Field(() => String)
+  location!: string;
 
   @ApiProperty({
     required: true,
@@ -65,11 +121,11 @@ class User {
 
   @ApiProperty({
     required: true,
+    type: String,
   })
-  @IsDate()
-  @Type(() => Date)
-  @Field(() => Date)
-  updatedAt!: Date;
+  @IsString()
+  @Field(() => String)
+  telephone_number!: string;
 
   @ApiProperty({
     required: true,
@@ -78,5 +134,13 @@ class User {
   @IsString()
   @Field(() => String)
   username!: string;
+
+  @ApiProperty({
+    required: true,
+    type: String,
+  })
+  @IsString()
+  @Field(() => String)
+  user_type!: string;
 }
 export { User };

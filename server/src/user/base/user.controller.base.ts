@@ -20,6 +20,8 @@ import * as errors from "../../errors";
 import { Request } from "express";
 import { plainToClass } from "class-transformer";
 import { ApiNestedQuery } from "../../decorators/api-nested-query.decorator";
+import { AclValidateRequestInterceptor } from "../../interceptors/aclValidateRequest.interceptor";
+import { AclFilterResponseInterceptor } from "../../interceptors/aclFilterResponse.interceptor";
 import { UserService } from "../user.service";
 import { UserCreateInput } from "./UserCreateInput";
 import { UserWhereInput } from "./UserWhereInput";
@@ -27,6 +29,18 @@ import { UserWhereUniqueInput } from "./UserWhereUniqueInput";
 import { UserFindManyArgs } from "./UserFindManyArgs";
 import { UserUpdateInput } from "./UserUpdateInput";
 import { User } from "./User";
+import { HousingApplicantFindManyArgs } from "../../housingApplicant/base/HousingApplicantFindManyArgs";
+import { HousingApplicant } from "../../housingApplicant/base/HousingApplicant";
+import { HousingApplicantWhereUniqueInput } from "../../housingApplicant/base/HousingApplicantWhereUniqueInput";
+import { HousingOfferingFindManyArgs } from "../../housingOffering/base/HousingOfferingFindManyArgs";
+import { HousingOffering } from "../../housingOffering/base/HousingOffering";
+import { HousingOfferingWhereUniqueInput } from "../../housingOffering/base/HousingOfferingWhereUniqueInput";
+import { JobApplicantFindManyArgs } from "../../jobApplicant/base/JobApplicantFindManyArgs";
+import { JobApplicant } from "../../jobApplicant/base/JobApplicant";
+import { JobApplicantWhereUniqueInput } from "../../jobApplicant/base/JobApplicantWhereUniqueInput";
+import { JobOfferingFindManyArgs } from "../../jobOffering/base/JobOfferingFindManyArgs";
+import { JobOffering } from "../../jobOffering/base/JobOffering";
+import { JobOfferingWhereUniqueInput } from "../../jobOffering/base/JobOfferingWhereUniqueInput";
 @swagger.ApiBearerAuth()
 export class UserControllerBase {
   constructor(
@@ -35,6 +49,7 @@ export class UserControllerBase {
   ) {}
 
   @common.UseInterceptors(nestMorgan.MorganInterceptor("combined"))
+  @common.UseInterceptors(AclValidateRequestInterceptor)
   @common.UseGuards(
     defaultAuthGuard.DefaultAuthGuard,
     nestAccessControl.ACGuard
@@ -47,43 +62,26 @@ export class UserControllerBase {
   })
   @swagger.ApiCreatedResponse({ type: User })
   @swagger.ApiForbiddenResponse({ type: errors.ForbiddenException })
-  async create(
-    @common.Body() data: UserCreateInput,
-    @nestAccessControl.UserRoles() userRoles: string[]
-  ): Promise<User> {
-    const permission = this.rolesBuilder.permission({
-      role: userRoles,
-      action: "create",
-      possession: "any",
-      resource: "User",
-    });
-    const invalidAttributes = abacUtil.getInvalidAttributes(permission, data);
-    if (invalidAttributes.length) {
-      const properties = invalidAttributes
-        .map((attribute: string) => JSON.stringify(attribute))
-        .join(", ");
-      const roles = userRoles
-        .map((role: string) => JSON.stringify(role))
-        .join(",");
-      throw new errors.ForbiddenException(
-        `providing the properties: ${properties} on ${"User"} creation is forbidden for roles: ${roles}`
-      );
-    }
+  async create(@common.Body() data: UserCreateInput): Promise<User> {
     return await this.service.create({
       data: data,
       select: {
-        createdAt: true,
-        firstName: true,
+        description: true,
+        email: true,
+        first_name: true,
         id: true,
-        lastName: true,
+        last_name: true,
+        location: true,
         roles: true,
-        updatedAt: true,
+        telephone_number: true,
         username: true,
+        user_type: true,
       },
     });
   }
 
   @common.UseInterceptors(nestMorgan.MorganInterceptor("combined"))
+  @common.UseInterceptors(AclFilterResponseInterceptor)
   @common.UseGuards(
     defaultAuthGuard.DefaultAuthGuard,
     nestAccessControl.ACGuard
@@ -97,34 +95,27 @@ export class UserControllerBase {
   @swagger.ApiOkResponse({ type: [User] })
   @swagger.ApiForbiddenResponse()
   @ApiNestedQuery(UserFindManyArgs)
-  async findMany(
-    @common.Req() request: Request,
-    @nestAccessControl.UserRoles() userRoles: string[]
-  ): Promise<User[]> {
+  async findMany(@common.Req() request: Request): Promise<User[]> {
     const args = plainToClass(UserFindManyArgs, request.query);
-
-    const permission = this.rolesBuilder.permission({
-      role: userRoles,
-      action: "read",
-      possession: "any",
-      resource: "User",
-    });
-    const results = await this.service.findMany({
+    return this.service.findMany({
       ...args,
       select: {
-        createdAt: true,
-        firstName: true,
+        description: true,
+        email: true,
+        first_name: true,
         id: true,
-        lastName: true,
+        last_name: true,
+        location: true,
         roles: true,
-        updatedAt: true,
+        telephone_number: true,
         username: true,
+        user_type: true,
       },
     });
-    return results.map((result) => permission.filter(result));
   }
 
   @common.UseInterceptors(nestMorgan.MorganInterceptor("combined"))
+  @common.UseInterceptors(AclFilterResponseInterceptor)
   @common.UseGuards(
     defaultAuthGuard.DefaultAuthGuard,
     nestAccessControl.ACGuard
@@ -139,25 +130,21 @@ export class UserControllerBase {
   @swagger.ApiNotFoundResponse({ type: errors.NotFoundException })
   @swagger.ApiForbiddenResponse({ type: errors.ForbiddenException })
   async findOne(
-    @common.Param() params: UserWhereUniqueInput,
-    @nestAccessControl.UserRoles() userRoles: string[]
+    @common.Param() params: UserWhereUniqueInput
   ): Promise<User | null> {
-    const permission = this.rolesBuilder.permission({
-      role: userRoles,
-      action: "read",
-      possession: "own",
-      resource: "User",
-    });
     const result = await this.service.findOne({
       where: params,
       select: {
-        createdAt: true,
-        firstName: true,
+        description: true,
+        email: true,
+        first_name: true,
         id: true,
-        lastName: true,
+        last_name: true,
+        location: true,
         roles: true,
-        updatedAt: true,
+        telephone_number: true,
         username: true,
+        user_type: true,
       },
     });
     if (result === null) {
@@ -165,10 +152,11 @@ export class UserControllerBase {
         `No resource was found for ${JSON.stringify(params)}`
       );
     }
-    return permission.filter(result);
+    return result;
   }
 
   @common.UseInterceptors(nestMorgan.MorganInterceptor("combined"))
+  @common.UseInterceptors(AclValidateRequestInterceptor)
   @common.UseGuards(
     defaultAuthGuard.DefaultAuthGuard,
     nestAccessControl.ACGuard
@@ -184,40 +172,23 @@ export class UserControllerBase {
   @swagger.ApiForbiddenResponse({ type: errors.ForbiddenException })
   async update(
     @common.Param() params: UserWhereUniqueInput,
-    @common.Body()
-    data: UserUpdateInput,
-    @nestAccessControl.UserRoles() userRoles: string[]
+    @common.Body() data: UserUpdateInput
   ): Promise<User | null> {
-    const permission = this.rolesBuilder.permission({
-      role: userRoles,
-      action: "update",
-      possession: "any",
-      resource: "User",
-    });
-    const invalidAttributes = abacUtil.getInvalidAttributes(permission, data);
-    if (invalidAttributes.length) {
-      const properties = invalidAttributes
-        .map((attribute: string) => JSON.stringify(attribute))
-        .join(", ");
-      const roles = userRoles
-        .map((role: string) => JSON.stringify(role))
-        .join(",");
-      throw new errors.ForbiddenException(
-        `providing the properties: ${properties} on ${"User"} update is forbidden for roles: ${roles}`
-      );
-    }
     try {
       return await this.service.update({
         where: params,
         data: data,
         select: {
-          createdAt: true,
-          firstName: true,
+          description: true,
+          email: true,
+          first_name: true,
           id: true,
-          lastName: true,
+          last_name: true,
+          location: true,
           roles: true,
-          updatedAt: true,
+          telephone_number: true,
           username: true,
+          user_type: true,
         },
       });
     } catch (error) {
@@ -251,13 +222,16 @@ export class UserControllerBase {
       return await this.service.delete({
         where: params,
         select: {
-          createdAt: true,
-          firstName: true,
+          description: true,
+          email: true,
+          first_name: true,
           id: true,
-          lastName: true,
+          last_name: true,
+          location: true,
           roles: true,
-          updatedAt: true,
+          telephone_number: true,
           username: true,
+          user_type: true,
         },
       });
     } catch (error) {
@@ -268,5 +242,508 @@ export class UserControllerBase {
       }
       throw error;
     }
+  }
+
+  @common.UseInterceptors(nestMorgan.MorganInterceptor("combined"))
+  @common.UseInterceptors(AclFilterResponseInterceptor)
+  @common.UseGuards(
+    defaultAuthGuard.DefaultAuthGuard,
+    nestAccessControl.ACGuard
+  )
+  @common.Get("/:id/housing_applicants")
+  @nestAccessControl.UseRoles({
+    resource: "HousingApplicant",
+    action: "read",
+    possession: "any",
+  })
+  @ApiNestedQuery(HousingApplicantFindManyArgs)
+  async findManyHousingApplicants(
+    @common.Req() request: Request,
+    @common.Param() params: UserWhereUniqueInput
+  ): Promise<HousingApplicant[]> {
+    const query = plainToClass(HousingApplicantFindManyArgs, request.query);
+    const results = await this.service.findHousingApplicants(params.id, {
+      ...query,
+      select: {
+        house_offeringI_id: {
+          select: {
+            id: true,
+          },
+        },
+
+        id: true,
+
+        user_id: {
+          select: {
+            id: true,
+          },
+        },
+      },
+    });
+    if (results === null) {
+      throw new errors.NotFoundException(
+        `No resource was found for ${JSON.stringify(params)}`
+      );
+    }
+    return results;
+  }
+
+  @common.UseInterceptors(nestMorgan.MorganInterceptor("combined"))
+  @common.UseGuards(
+    defaultAuthGuard.DefaultAuthGuard,
+    nestAccessControl.ACGuard
+  )
+  @common.Post("/:id/housing_applicants")
+  @nestAccessControl.UseRoles({
+    resource: "User",
+    action: "update",
+    possession: "any",
+  })
+  async connectHousingApplicants(
+    @common.Param() params: UserWhereUniqueInput,
+    @common.Body() body: HousingApplicantWhereUniqueInput[]
+  ): Promise<void> {
+    const data = {
+      housing_applicants: {
+        connect: body,
+      },
+    };
+    await this.service.update({
+      where: params,
+      data,
+      select: { id: true },
+    });
+  }
+
+  @common.UseInterceptors(nestMorgan.MorganInterceptor("combined"))
+  @common.UseGuards(
+    defaultAuthGuard.DefaultAuthGuard,
+    nestAccessControl.ACGuard
+  )
+  @common.Patch("/:id/housing_applicants")
+  @nestAccessControl.UseRoles({
+    resource: "User",
+    action: "update",
+    possession: "any",
+  })
+  async updateHousingApplicants(
+    @common.Param() params: UserWhereUniqueInput,
+    @common.Body() body: HousingApplicantWhereUniqueInput[]
+  ): Promise<void> {
+    const data = {
+      housing_applicants: {
+        set: body,
+      },
+    };
+    await this.service.update({
+      where: params,
+      data,
+      select: { id: true },
+    });
+  }
+
+  @common.UseInterceptors(nestMorgan.MorganInterceptor("combined"))
+  @common.UseGuards(
+    defaultAuthGuard.DefaultAuthGuard,
+    nestAccessControl.ACGuard
+  )
+  @common.Delete("/:id/housing_applicants")
+  @nestAccessControl.UseRoles({
+    resource: "User",
+    action: "update",
+    possession: "any",
+  })
+  async disconnectHousingApplicants(
+    @common.Param() params: UserWhereUniqueInput,
+    @common.Body() body: HousingApplicantWhereUniqueInput[]
+  ): Promise<void> {
+    const data = {
+      housing_applicants: {
+        disconnect: body,
+      },
+    };
+    await this.service.update({
+      where: params,
+      data,
+      select: { id: true },
+    });
+  }
+
+  @common.UseInterceptors(nestMorgan.MorganInterceptor("combined"))
+  @common.UseInterceptors(AclFilterResponseInterceptor)
+  @common.UseGuards(
+    defaultAuthGuard.DefaultAuthGuard,
+    nestAccessControl.ACGuard
+  )
+  @common.Get("/:id/housing_offerings")
+  @nestAccessControl.UseRoles({
+    resource: "HousingOffering",
+    action: "read",
+    possession: "any",
+  })
+  @ApiNestedQuery(HousingOfferingFindManyArgs)
+  async findManyHousingOfferings(
+    @common.Req() request: Request,
+    @common.Param() params: UserWhereUniqueInput
+  ): Promise<HousingOffering[]> {
+    const query = plainToClass(HousingOfferingFindManyArgs, request.query);
+    const results = await this.service.findHousingOfferings(params.id, {
+      ...query,
+      select: {
+        address: true,
+
+        author_id: {
+          select: {
+            id: true,
+          },
+        },
+
+        city: true,
+        description: true,
+        id: true,
+        price: true,
+        rooms_number: true,
+        size: true,
+        title: true,
+      },
+    });
+    if (results === null) {
+      throw new errors.NotFoundException(
+        `No resource was found for ${JSON.stringify(params)}`
+      );
+    }
+    return results;
+  }
+
+  @common.UseInterceptors(nestMorgan.MorganInterceptor("combined"))
+  @common.UseGuards(
+    defaultAuthGuard.DefaultAuthGuard,
+    nestAccessControl.ACGuard
+  )
+  @common.Post("/:id/housing_offerings")
+  @nestAccessControl.UseRoles({
+    resource: "User",
+    action: "update",
+    possession: "any",
+  })
+  async connectHousingOfferings(
+    @common.Param() params: UserWhereUniqueInput,
+    @common.Body() body: HousingOfferingWhereUniqueInput[]
+  ): Promise<void> {
+    const data = {
+      housing_offerings: {
+        connect: body,
+      },
+    };
+    await this.service.update({
+      where: params,
+      data,
+      select: { id: true },
+    });
+  }
+
+  @common.UseInterceptors(nestMorgan.MorganInterceptor("combined"))
+  @common.UseGuards(
+    defaultAuthGuard.DefaultAuthGuard,
+    nestAccessControl.ACGuard
+  )
+  @common.Patch("/:id/housing_offerings")
+  @nestAccessControl.UseRoles({
+    resource: "User",
+    action: "update",
+    possession: "any",
+  })
+  async updateHousingOfferings(
+    @common.Param() params: UserWhereUniqueInput,
+    @common.Body() body: HousingOfferingWhereUniqueInput[]
+  ): Promise<void> {
+    const data = {
+      housing_offerings: {
+        set: body,
+      },
+    };
+    await this.service.update({
+      where: params,
+      data,
+      select: { id: true },
+    });
+  }
+
+  @common.UseInterceptors(nestMorgan.MorganInterceptor("combined"))
+  @common.UseGuards(
+    defaultAuthGuard.DefaultAuthGuard,
+    nestAccessControl.ACGuard
+  )
+  @common.Delete("/:id/housing_offerings")
+  @nestAccessControl.UseRoles({
+    resource: "User",
+    action: "update",
+    possession: "any",
+  })
+  async disconnectHousingOfferings(
+    @common.Param() params: UserWhereUniqueInput,
+    @common.Body() body: HousingOfferingWhereUniqueInput[]
+  ): Promise<void> {
+    const data = {
+      housing_offerings: {
+        disconnect: body,
+      },
+    };
+    await this.service.update({
+      where: params,
+      data,
+      select: { id: true },
+    });
+  }
+
+  @common.UseInterceptors(nestMorgan.MorganInterceptor("combined"))
+  @common.UseInterceptors(AclFilterResponseInterceptor)
+  @common.UseGuards(
+    defaultAuthGuard.DefaultAuthGuard,
+    nestAccessControl.ACGuard
+  )
+  @common.Get("/:id/job_applicants")
+  @nestAccessControl.UseRoles({
+    resource: "JobApplicant",
+    action: "read",
+    possession: "any",
+  })
+  @ApiNestedQuery(JobApplicantFindManyArgs)
+  async findManyJobApplicants(
+    @common.Req() request: Request,
+    @common.Param() params: UserWhereUniqueInput
+  ): Promise<JobApplicant[]> {
+    const query = plainToClass(JobApplicantFindManyArgs, request.query);
+    const results = await this.service.findJobApplicants(params.id, {
+      ...query,
+      select: {
+        id: true,
+
+        job_offering_id: {
+          select: {
+            id: true,
+          },
+        },
+
+        user_id: {
+          select: {
+            id: true,
+          },
+        },
+      },
+    });
+    if (results === null) {
+      throw new errors.NotFoundException(
+        `No resource was found for ${JSON.stringify(params)}`
+      );
+    }
+    return results;
+  }
+
+  @common.UseInterceptors(nestMorgan.MorganInterceptor("combined"))
+  @common.UseGuards(
+    defaultAuthGuard.DefaultAuthGuard,
+    nestAccessControl.ACGuard
+  )
+  @common.Post("/:id/job_applicants")
+  @nestAccessControl.UseRoles({
+    resource: "User",
+    action: "update",
+    possession: "any",
+  })
+  async connectJobApplicants(
+    @common.Param() params: UserWhereUniqueInput,
+    @common.Body() body: JobApplicantWhereUniqueInput[]
+  ): Promise<void> {
+    const data = {
+      job_applicants: {
+        connect: body,
+      },
+    };
+    await this.service.update({
+      where: params,
+      data,
+      select: { id: true },
+    });
+  }
+
+  @common.UseInterceptors(nestMorgan.MorganInterceptor("combined"))
+  @common.UseGuards(
+    defaultAuthGuard.DefaultAuthGuard,
+    nestAccessControl.ACGuard
+  )
+  @common.Patch("/:id/job_applicants")
+  @nestAccessControl.UseRoles({
+    resource: "User",
+    action: "update",
+    possession: "any",
+  })
+  async updateJobApplicants(
+    @common.Param() params: UserWhereUniqueInput,
+    @common.Body() body: JobApplicantWhereUniqueInput[]
+  ): Promise<void> {
+    const data = {
+      job_applicants: {
+        set: body,
+      },
+    };
+    await this.service.update({
+      where: params,
+      data,
+      select: { id: true },
+    });
+  }
+
+  @common.UseInterceptors(nestMorgan.MorganInterceptor("combined"))
+  @common.UseGuards(
+    defaultAuthGuard.DefaultAuthGuard,
+    nestAccessControl.ACGuard
+  )
+  @common.Delete("/:id/job_applicants")
+  @nestAccessControl.UseRoles({
+    resource: "User",
+    action: "update",
+    possession: "any",
+  })
+  async disconnectJobApplicants(
+    @common.Param() params: UserWhereUniqueInput,
+    @common.Body() body: JobApplicantWhereUniqueInput[]
+  ): Promise<void> {
+    const data = {
+      job_applicants: {
+        disconnect: body,
+      },
+    };
+    await this.service.update({
+      where: params,
+      data,
+      select: { id: true },
+    });
+  }
+
+  @common.UseInterceptors(nestMorgan.MorganInterceptor("combined"))
+  @common.UseInterceptors(AclFilterResponseInterceptor)
+  @common.UseGuards(
+    defaultAuthGuard.DefaultAuthGuard,
+    nestAccessControl.ACGuard
+  )
+  @common.Get("/:id/job_offerings")
+  @nestAccessControl.UseRoles({
+    resource: "JobOffering",
+    action: "read",
+    possession: "any",
+  })
+  @ApiNestedQuery(JobOfferingFindManyArgs)
+  async findManyJobOfferings(
+    @common.Req() request: Request,
+    @common.Param() params: UserWhereUniqueInput
+  ): Promise<JobOffering[]> {
+    const query = plainToClass(JobOfferingFindManyArgs, request.query);
+    const results = await this.service.findJobOfferings(params.id, {
+      ...query,
+      select: {
+        author_id: {
+          select: {
+            id: true,
+          },
+        },
+
+        city: true,
+        description: true,
+        id: true,
+        max_salary: true,
+        min_salary: true,
+        position_level: true,
+        title: true,
+        working_mode: true,
+      },
+    });
+    if (results === null) {
+      throw new errors.NotFoundException(
+        `No resource was found for ${JSON.stringify(params)}`
+      );
+    }
+    return results;
+  }
+
+  @common.UseInterceptors(nestMorgan.MorganInterceptor("combined"))
+  @common.UseGuards(
+    defaultAuthGuard.DefaultAuthGuard,
+    nestAccessControl.ACGuard
+  )
+  @common.Post("/:id/job_offerings")
+  @nestAccessControl.UseRoles({
+    resource: "User",
+    action: "update",
+    possession: "any",
+  })
+  async connectJobOfferings(
+    @common.Param() params: UserWhereUniqueInput,
+    @common.Body() body: JobOfferingWhereUniqueInput[]
+  ): Promise<void> {
+    const data = {
+      job_offerings: {
+        connect: body,
+      },
+    };
+    await this.service.update({
+      where: params,
+      data,
+      select: { id: true },
+    });
+  }
+
+  @common.UseInterceptors(nestMorgan.MorganInterceptor("combined"))
+  @common.UseGuards(
+    defaultAuthGuard.DefaultAuthGuard,
+    nestAccessControl.ACGuard
+  )
+  @common.Patch("/:id/job_offerings")
+  @nestAccessControl.UseRoles({
+    resource: "User",
+    action: "update",
+    possession: "any",
+  })
+  async updateJobOfferings(
+    @common.Param() params: UserWhereUniqueInput,
+    @common.Body() body: JobOfferingWhereUniqueInput[]
+  ): Promise<void> {
+    const data = {
+      job_offerings: {
+        set: body,
+      },
+    };
+    await this.service.update({
+      where: params,
+      data,
+      select: { id: true },
+    });
+  }
+
+  @common.UseInterceptors(nestMorgan.MorganInterceptor("combined"))
+  @common.UseGuards(
+    defaultAuthGuard.DefaultAuthGuard,
+    nestAccessControl.ACGuard
+  )
+  @common.Delete("/:id/job_offerings")
+  @nestAccessControl.UseRoles({
+    resource: "User",
+    action: "update",
+    possession: "any",
+  })
+  async disconnectJobOfferings(
+    @common.Param() params: UserWhereUniqueInput,
+    @common.Body() body: JobOfferingWhereUniqueInput[]
+  ): Promise<void> {
+    const data = {
+      job_offerings: {
+        disconnect: body,
+      },
+    };
+    await this.service.update({
+      where: params,
+      data,
+      select: { id: true },
+    });
   }
 }

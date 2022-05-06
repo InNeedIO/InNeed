@@ -11,46 +11,58 @@ import { UserService } from "../user.service";
 const nonExistingId = "nonExistingId";
 const existingId = "existingId";
 const CREATE_INPUT = {
-  createdAt: new Date(),
-  firstName: "exampleFirstName",
+  description: "exampleDescription",
+  email: "exampleEmail",
+  first_name: "exampleFirstName",
   id: "exampleId",
-  lastName: "exampleLastName",
+  last_name: "exampleLastName",
+  location: "exampleLocation",
   password: "examplePassword",
   roles: ["exampleRoles"],
-  updatedAt: new Date(),
+  telephone_number: "exampleTelephoneNumber",
   username: "exampleUsername",
+  user_type: "exampleUserType",
 };
 const CREATE_RESULT = {
-  createdAt: new Date(),
-  firstName: "exampleFirstName",
+  description: "exampleDescription",
+  email: "exampleEmail",
+  first_name: "exampleFirstName",
   id: "exampleId",
-  lastName: "exampleLastName",
+  last_name: "exampleLastName",
+  location: "exampleLocation",
   password: "examplePassword",
   roles: ["exampleRoles"],
-  updatedAt: new Date(),
+  telephone_number: "exampleTelephoneNumber",
   username: "exampleUsername",
+  user_type: "exampleUserType",
 };
 const FIND_MANY_RESULT = [
   {
-    createdAt: new Date(),
-    firstName: "exampleFirstName",
+    description: "exampleDescription",
+    email: "exampleEmail",
+    first_name: "exampleFirstName",
     id: "exampleId",
-    lastName: "exampleLastName",
+    last_name: "exampleLastName",
+    location: "exampleLocation",
     password: "examplePassword",
     roles: ["exampleRoles"],
-    updatedAt: new Date(),
+    telephone_number: "exampleTelephoneNumber",
     username: "exampleUsername",
+    user_type: "exampleUserType",
   },
 ];
 const FIND_ONE_RESULT = {
-  createdAt: new Date(),
-  firstName: "exampleFirstName",
+  description: "exampleDescription",
+  email: "exampleEmail",
+  first_name: "exampleFirstName",
   id: "exampleId",
-  lastName: "exampleLastName",
+  last_name: "exampleLastName",
+  location: "exampleLocation",
   password: "examplePassword",
   roles: ["exampleRoles"],
-  updatedAt: new Date(),
+  telephone_number: "exampleTelephoneNumber",
   username: "exampleUsername",
+  user_type: "exampleUserType",
 };
 
 const service = {
@@ -114,24 +126,14 @@ describe("User", () => {
       .post("/users")
       .send(CREATE_INPUT)
       .expect(HttpStatus.CREATED)
-      .expect({
-        ...CREATE_RESULT,
-        createdAt: CREATE_RESULT.createdAt.toISOString(),
-        updatedAt: CREATE_RESULT.updatedAt.toISOString(),
-      });
+      .expect(CREATE_RESULT);
   });
 
   test("GET /users", async () => {
     await request(app.getHttpServer())
       .get("/users")
       .expect(HttpStatus.OK)
-      .expect([
-        {
-          ...FIND_MANY_RESULT[0],
-          createdAt: FIND_MANY_RESULT[0].createdAt.toISOString(),
-          updatedAt: FIND_MANY_RESULT[0].updatedAt.toISOString(),
-        },
-      ]);
+      .expect([FIND_MANY_RESULT[0]]);
   });
 
   test("GET /users/:id non existing", async () => {
@@ -149,11 +151,7 @@ describe("User", () => {
     await request(app.getHttpServer())
       .get(`${"/users"}/${existingId}`)
       .expect(HttpStatus.OK)
-      .expect({
-        ...FIND_ONE_RESULT,
-        createdAt: FIND_ONE_RESULT.createdAt.toISOString(),
-        updatedAt: FIND_ONE_RESULT.updatedAt.toISOString(),
-      });
+      .expect(FIND_ONE_RESULT);
   });
 
   afterAll(async () => {

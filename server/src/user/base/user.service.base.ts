@@ -10,7 +10,14 @@ https://docs.amplication.com/docs/how-to/custom-code
 ------------------------------------------------------------------------------
   */
 import { PrismaService } from "nestjs-prisma";
-import { Prisma, User } from "@prisma/client";
+import {
+  Prisma,
+  User,
+  HousingApplicant,
+  HousingOffering,
+  JobApplicant,
+  JobOffering,
+} from "@prisma/client";
 import { PasswordService } from "../../auth/password.service";
 import { transformStringFieldUpdateInput } from "../../prisma.util";
 
@@ -70,5 +77,49 @@ export class UserServiceBase {
     args: Prisma.SelectSubset<T, Prisma.UserDeleteArgs>
   ): Promise<User> {
     return this.prisma.user.delete(args);
+  }
+
+  async findHousingApplicants(
+    parentId: string,
+    args: Prisma.HousingApplicantFindManyArgs
+  ): Promise<HousingApplicant[]> {
+    return this.prisma.user
+      .findUnique({
+        where: { id: parentId },
+      })
+      .housing_applicants(args);
+  }
+
+  async findHousingOfferings(
+    parentId: string,
+    args: Prisma.HousingOfferingFindManyArgs
+  ): Promise<HousingOffering[]> {
+    return this.prisma.user
+      .findUnique({
+        where: { id: parentId },
+      })
+      .housing_offerings(args);
+  }
+
+  async findJobApplicants(
+    parentId: string,
+    args: Prisma.JobApplicantFindManyArgs
+  ): Promise<JobApplicant[]> {
+    return this.prisma.user
+      .findUnique({
+        where: { id: parentId },
+      })
+      .job_applicants(args);
+  }
+
+  async findJobOfferings(
+    parentId: string,
+    args: Prisma.JobOfferingFindManyArgs
+  ): Promise<JobOffering[]> {
+    return this.prisma.user
+      .findUnique({
+        where: { id: parentId },
+      })
+      .job_offerings(args);
   }
 }

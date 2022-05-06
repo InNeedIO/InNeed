@@ -1,9 +1,21 @@
+import { HousingApplicant } from "../housingApplicant/HousingApplicant";
+import { HousingOffering } from "../housingOffering/HousingOffering";
+import { JobApplicant } from "../jobApplicant/JobApplicant";
+import { JobOffering } from "../jobOffering/JobOffering";
+
 export type User = {
-  createdAt: Date;
-  firstName: string | null;
+  description: string | null;
+  email: string;
+  first_name: string;
+  housing_applicants?: Array<HousingApplicant>;
+  housing_offerings?: Array<HousingOffering>;
   id: string;
-  lastName: string | null;
+  job_applicants?: Array<JobApplicant>;
+  job_offerings?: Array<JobOffering>;
+  last_name: string | null;
+  location: string;
   roles: Array<string>;
-  updatedAt: Date;
+  telephone_number: string;
   username: string;
+  user_type: string;
 };
