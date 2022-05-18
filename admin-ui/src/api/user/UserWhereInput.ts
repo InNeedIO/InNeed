@@ -14,7 +14,7 @@ export type UserWhereInput = {
   id?: StringFilter;
   job_applicants?: JobApplicantListRelationFilter;
   job_offerings?: JobOfferingListRelationFilter;
-  last_name?: StringNullableFilter;
+  last_name?: StringFilter;
   location?: StringFilter;
   telephone_number?: StringFilter;
   username?: StringFilter;

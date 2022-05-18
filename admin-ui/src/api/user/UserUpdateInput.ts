@@ -11,7 +11,7 @@ export type UserUpdateInput = {
   housing_offerings?: HousingOfferingUpdateManyWithoutUsersInput;
   job_applicants?: JobApplicantUpdateManyWithoutUsersInput;
   job_offerings?: JobOfferingUpdateManyWithoutUsersInput;
-  last_name?: string | null;
+  last_name?: string;
   location?: string;
   password?: string;
   roles?: Array<string>;

@@ -31,6 +31,7 @@ async function seed(bcryptSalt: Salt) {
     roles: ["user"],
     email: "example@example.com",
     first_name: "",
+    last_name: "",
     location: "",
     telephone_number: "",
     user_type: "",
