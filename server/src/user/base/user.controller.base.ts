@@ -11,18 +11,16 @@ https://docs.amplication.com/docs/how-to/custom-code
   */
 import * as common from "@nestjs/common";
 import * as swagger from "@nestjs/swagger";
-import * as nestMorgan from "nest-morgan";
 import * as nestAccessControl from "nest-access-control";
 import * as defaultAuthGuard from "../../auth/defaultAuth.guard";
-import * as abacUtil from "../../auth/abac.util";
 import { isRecordNotFoundError } from "../../prisma.util";
 import * as errors from "../../errors";
 import { Request } from "express";
 import { plainToClass } from "class-transformer";
 import { ApiNestedQuery } from "../../decorators/api-nested-query.decorator";
+import { UserService } from "../user.service";
 import { AclValidateRequestInterceptor } from "../../interceptors/aclValidateRequest.interceptor";
 import { AclFilterResponseInterceptor } from "../../interceptors/aclFilterResponse.interceptor";
-import { UserService } from "../user.service";
 import { UserCreateInput } from "./UserCreateInput";
 import { UserWhereInput } from "./UserWhereInput";
 import { UserWhereUniqueInput } from "./UserWhereUniqueInput";
@@ -42,24 +40,20 @@ import { JobOfferingFindManyArgs } from "../../jobOffering/base/JobOfferingFindM
 import { JobOffering } from "../../jobOffering/base/JobOffering";
 import { JobOfferingWhereUniqueInput } from "../../jobOffering/base/JobOfferingWhereUniqueInput";
 @swagger.ApiBearerAuth()
+@common.UseGuards(defaultAuthGuard.DefaultAuthGuard, nestAccessControl.ACGuard)
 export class UserControllerBase {
   constructor(
     protected readonly service: UserService,
     protected readonly rolesBuilder: nestAccessControl.RolesBuilder
   ) {}
 
-  @common.UseInterceptors(nestMorgan.MorganInterceptor("combined"))
   @common.UseInterceptors(AclValidateRequestInterceptor)
-  @common.UseGuards(
-    defaultAuthGuard.DefaultAuthGuard,
-    nestAccessControl.ACGuard
-  )
-  @common.Post()
   @nestAccessControl.UseRoles({
     resource: "User",
     action: "create",
     possession: "any",
   })
+  @common.Post()
   @swagger.ApiCreatedResponse({ type: User })
   @swagger.ApiForbiddenResponse({ type: errors.ForbiddenException })
   async create(@common.Body() data: UserCreateInput): Promise<User> {
@@ -80,18 +74,13 @@ export class UserControllerBase {
     });
   }
 
-  @common.UseInterceptors(nestMorgan.MorganInterceptor("combined"))
   @common.UseInterceptors(AclFilterResponseInterceptor)
-  @common.UseGuards(
-    defaultAuthGuard.DefaultAuthGuard,
-    nestAccessControl.ACGuard
-  )
-  @common.Get()
   @nestAccessControl.UseRoles({
     resource: "User",
     action: "read",
     possession: "any",
   })
+  @common.Get()
   @swagger.ApiOkResponse({ type: [User] })
   @swagger.ApiForbiddenResponse()
   @ApiNestedQuery(UserFindManyArgs)
@@ -114,18 +103,13 @@ export class UserControllerBase {
     });
   }
 
-  @common.UseInterceptors(nestMorgan.MorganInterceptor("combined"))
   @common.UseInterceptors(AclFilterResponseInterceptor)
-  @common.UseGuards(
-    defaultAuthGuard.DefaultAuthGuard,
-    nestAccessControl.ACGuard
-  )
-  @common.Get("/:id")
   @nestAccessControl.UseRoles({
     resource: "User",
     action: "read",
     possession: "own",
   })
+  @common.Get("/:id")
   @swagger.ApiOkResponse({ type: User })
   @swagger.ApiNotFoundResponse({ type: errors.NotFoundException })
   @swagger.ApiForbiddenResponse({ type: errors.ForbiddenException })
@@ -155,18 +139,13 @@ export class UserControllerBase {
     return result;
   }
 
-  @common.UseInterceptors(nestMorgan.MorganInterceptor("combined"))
   @common.UseInterceptors(AclValidateRequestInterceptor)
-  @common.UseGuards(
-    defaultAuthGuard.DefaultAuthGuard,
-    nestAccessControl.ACGuard
-  )
-  @common.Patch("/:id")
   @nestAccessControl.UseRoles({
     resource: "User",
     action: "update",
     possession: "any",
   })
+  @common.Patch("/:id")
   @swagger.ApiOkResponse({ type: User })
   @swagger.ApiNotFoundResponse({ type: errors.NotFoundException })
   @swagger.ApiForbiddenResponse({ type: errors.ForbiddenException })
@@ -201,17 +180,12 @@ export class UserControllerBase {
     }
   }
 
-  @common.UseInterceptors(nestMorgan.MorganInterceptor("combined"))
-  @common.UseGuards(
-    defaultAuthGuard.DefaultAuthGuard,
-    nestAccessControl.ACGuard
-  )
-  @common.Delete("/:id")
   @nestAccessControl.UseRoles({
     resource: "User",
     action: "delete",
     possession: "any",
   })
+  @common.Delete("/:id")
   @swagger.ApiOkResponse({ type: User })
   @swagger.ApiNotFoundResponse({ type: errors.NotFoundException })
   @swagger.ApiForbiddenResponse({ type: errors.ForbiddenException })
@@ -244,18 +218,13 @@ export class UserControllerBase {
     }
   }
 
-  @common.UseInterceptors(nestMorgan.MorganInterceptor("combined"))
   @common.UseInterceptors(AclFilterResponseInterceptor)
-  @common.UseGuards(
-    defaultAuthGuard.DefaultAuthGuard,
-    nestAccessControl.ACGuard
-  )
-  @common.Get("/:id/housing_applicants")
   @nestAccessControl.UseRoles({
     resource: "HousingApplicant",
     action: "read",
     possession: "any",
   })
+  @common.Get("/:id/housing_applicants")
   @ApiNestedQuery(HousingApplicantFindManyArgs)
   async findManyHousingApplicants(
     @common.Req() request: Request,
@@ -288,17 +257,12 @@ export class UserControllerBase {
     return results;
   }
 
-  @common.UseInterceptors(nestMorgan.MorganInterceptor("combined"))
-  @common.UseGuards(
-    defaultAuthGuard.DefaultAuthGuard,
-    nestAccessControl.ACGuard
-  )
-  @common.Post("/:id/housing_applicants")
   @nestAccessControl.UseRoles({
     resource: "User",
     action: "update",
     possession: "any",
   })
+  @common.Post("/:id/housing_applicants")
   async connectHousingApplicants(
     @common.Param() params: UserWhereUniqueInput,
     @common.Body() body: HousingApplicantWhereUniqueInput[]
@@ -315,17 +279,12 @@ export class UserControllerBase {
     });
   }
 
-  @common.UseInterceptors(nestMorgan.MorganInterceptor("combined"))
-  @common.UseGuards(
-    defaultAuthGuard.DefaultAuthGuard,
-    nestAccessControl.ACGuard
-  )
-  @common.Patch("/:id/housing_applicants")
   @nestAccessControl.UseRoles({
     resource: "User",
     action: "update",
     possession: "any",
   })
+  @common.Patch("/:id/housing_applicants")
   async updateHousingApplicants(
     @common.Param() params: UserWhereUniqueInput,
     @common.Body() body: HousingApplicantWhereUniqueInput[]
@@ -342,17 +301,12 @@ export class UserControllerBase {
     });
   }
 
-  @common.UseInterceptors(nestMorgan.MorganInterceptor("combined"))
-  @common.UseGuards(
-    defaultAuthGuard.DefaultAuthGuard,
-    nestAccessControl.ACGuard
-  )
-  @common.Delete("/:id/housing_applicants")
   @nestAccessControl.UseRoles({
     resource: "User",
     action: "update",
     possession: "any",
   })
+  @common.Delete("/:id/housing_applicants")
   async disconnectHousingApplicants(
     @common.Param() params: UserWhereUniqueInput,
     @common.Body() body: HousingApplicantWhereUniqueInput[]
@@ -369,18 +323,13 @@ export class UserControllerBase {
     });
   }
 
-  @common.UseInterceptors(nestMorgan.MorganInterceptor("combined"))
   @common.UseInterceptors(AclFilterResponseInterceptor)
-  @common.UseGuards(
-    defaultAuthGuard.DefaultAuthGuard,
-    nestAccessControl.ACGuard
-  )
-  @common.Get("/:id/housing_offerings")
   @nestAccessControl.UseRoles({
     resource: "HousingOffering",
     action: "read",
     possession: "any",
   })
+  @common.Get("/:id/housing_offerings")
   @ApiNestedQuery(HousingOfferingFindManyArgs)
   async findManyHousingOfferings(
     @common.Req() request: Request,
@@ -415,17 +364,12 @@ export class UserControllerBase {
     return results;
   }
 
-  @common.UseInterceptors(nestMorgan.MorganInterceptor("combined"))
-  @common.UseGuards(
-    defaultAuthGuard.DefaultAuthGuard,
-    nestAccessControl.ACGuard
-  )
-  @common.Post("/:id/housing_offerings")
   @nestAccessControl.UseRoles({
     resource: "User",
     action: "update",
     possession: "any",
   })
+  @common.Post("/:id/housing_offerings")
   async connectHousingOfferings(
     @common.Param() params: UserWhereUniqueInput,
     @common.Body() body: HousingOfferingWhereUniqueInput[]
@@ -442,17 +386,12 @@ export class UserControllerBase {
     });
   }
 
-  @common.UseInterceptors(nestMorgan.MorganInterceptor("combined"))
-  @common.UseGuards(
-    defaultAuthGuard.DefaultAuthGuard,
-    nestAccessControl.ACGuard
-  )
-  @common.Patch("/:id/housing_offerings")
   @nestAccessControl.UseRoles({
     resource: "User",
     action: "update",
     possession: "any",
   })
+  @common.Patch("/:id/housing_offerings")
   async updateHousingOfferings(
     @common.Param() params: UserWhereUniqueInput,
     @common.Body() body: HousingOfferingWhereUniqueInput[]
@@ -469,17 +408,12 @@ export class UserControllerBase {
     });
   }
 
-  @common.UseInterceptors(nestMorgan.MorganInterceptor("combined"))
-  @common.UseGuards(
-    defaultAuthGuard.DefaultAuthGuard,
-    nestAccessControl.ACGuard
-  )
-  @common.Delete("/:id/housing_offerings")
   @nestAccessControl.UseRoles({
     resource: "User",
     action: "update",
     possession: "any",
   })
+  @common.Delete("/:id/housing_offerings")
   async disconnectHousingOfferings(
     @common.Param() params: UserWhereUniqueInput,
     @common.Body() body: HousingOfferingWhereUniqueInput[]
@@ -496,18 +430,13 @@ export class UserControllerBase {
     });
   }
 
-  @common.UseInterceptors(nestMorgan.MorganInterceptor("combined"))
   @common.UseInterceptors(AclFilterResponseInterceptor)
-  @common.UseGuards(
-    defaultAuthGuard.DefaultAuthGuard,
-    nestAccessControl.ACGuard
-  )
-  @common.Get("/:id/job_applicants")
   @nestAccessControl.UseRoles({
     resource: "JobApplicant",
     action: "read",
     possession: "any",
   })
+  @common.Get("/:id/job_applicants")
   @ApiNestedQuery(JobApplicantFindManyArgs)
   async findManyJobApplicants(
     @common.Req() request: Request,
@@ -540,17 +469,12 @@ export class UserControllerBase {
     return results;
   }
 
-  @common.UseInterceptors(nestMorgan.MorganInterceptor("combined"))
-  @common.UseGuards(
-    defaultAuthGuard.DefaultAuthGuard,
-    nestAccessControl.ACGuard
-  )
-  @common.Post("/:id/job_applicants")
   @nestAccessControl.UseRoles({
     resource: "User",
     action: "update",
     possession: "any",
   })
+  @common.Post("/:id/job_applicants")
   async connectJobApplicants(
     @common.Param() params: UserWhereUniqueInput,
     @common.Body() body: JobApplicantWhereUniqueInput[]
@@ -567,17 +491,12 @@ export class UserControllerBase {
     });
   }
 
-  @common.UseInterceptors(nestMorgan.MorganInterceptor("combined"))
-  @common.UseGuards(
-    defaultAuthGuard.DefaultAuthGuard,
-    nestAccessControl.ACGuard
-  )
-  @common.Patch("/:id/job_applicants")
   @nestAccessControl.UseRoles({
     resource: "User",
     action: "update",
     possession: "any",
   })
+  @common.Patch("/:id/job_applicants")
   async updateJobApplicants(
     @common.Param() params: UserWhereUniqueInput,
     @common.Body() body: JobApplicantWhereUniqueInput[]
@@ -594,17 +513,12 @@ export class UserControllerBase {
     });
   }
 
-  @common.UseInterceptors(nestMorgan.MorganInterceptor("combined"))
-  @common.UseGuards(
-    defaultAuthGuard.DefaultAuthGuard,
-    nestAccessControl.ACGuard
-  )
-  @common.Delete("/:id/job_applicants")
   @nestAccessControl.UseRoles({
     resource: "User",
     action: "update",
     possession: "any",
   })
+  @common.Delete("/:id/job_applicants")
   async disconnectJobApplicants(
     @common.Param() params: UserWhereUniqueInput,
     @common.Body() body: JobApplicantWhereUniqueInput[]
@@ -621,18 +535,13 @@ export class UserControllerBase {
     });
   }
 
-  @common.UseInterceptors(nestMorgan.MorganInterceptor("combined"))
   @common.UseInterceptors(AclFilterResponseInterceptor)
-  @common.UseGuards(
-    defaultAuthGuard.DefaultAuthGuard,
-    nestAccessControl.ACGuard
-  )
-  @common.Get("/:id/job_offerings")
   @nestAccessControl.UseRoles({
     resource: "JobOffering",
     action: "read",
     possession: "any",
   })
+  @common.Get("/:id/job_offerings")
   @ApiNestedQuery(JobOfferingFindManyArgs)
   async findManyJobOfferings(
     @common.Req() request: Request,
@@ -666,17 +575,12 @@ export class UserControllerBase {
     return results;
   }
 
-  @common.UseInterceptors(nestMorgan.MorganInterceptor("combined"))
-  @common.UseGuards(
-    defaultAuthGuard.DefaultAuthGuard,
-    nestAccessControl.ACGuard
-  )
-  @common.Post("/:id/job_offerings")
   @nestAccessControl.UseRoles({
     resource: "User",
     action: "update",
     possession: "any",
   })
+  @common.Post("/:id/job_offerings")
   async connectJobOfferings(
     @common.Param() params: UserWhereUniqueInput,
     @common.Body() body: JobOfferingWhereUniqueInput[]
@@ -693,17 +597,12 @@ export class UserControllerBase {
     });
   }
 
-  @common.UseInterceptors(nestMorgan.MorganInterceptor("combined"))
-  @common.UseGuards(
-    defaultAuthGuard.DefaultAuthGuard,
-    nestAccessControl.ACGuard
-  )
-  @common.Patch("/:id/job_offerings")
   @nestAccessControl.UseRoles({
     resource: "User",
     action: "update",
     possession: "any",
   })
+  @common.Patch("/:id/job_offerings")
   async updateJobOfferings(
     @common.Param() params: UserWhereUniqueInput,
     @common.Body() body: JobOfferingWhereUniqueInput[]
@@ -720,17 +619,12 @@ export class UserControllerBase {
     });
   }
 
-  @common.UseInterceptors(nestMorgan.MorganInterceptor("combined"))
-  @common.UseGuards(
-    defaultAuthGuard.DefaultAuthGuard,
-    nestAccessControl.ACGuard
-  )
-  @common.Delete("/:id/job_offerings")
   @nestAccessControl.UseRoles({
     resource: "User",
     action: "update",
     possession: "any",
   })
+  @common.Delete("/:id/job_offerings")
   async disconnectJobOfferings(
     @common.Param() params: UserWhereUniqueInput,
     @common.Body() body: JobOfferingWhereUniqueInput[]

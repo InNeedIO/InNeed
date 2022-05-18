@@ -15,12 +15,10 @@ import * as apollo from "apollo-server-express";
 import * as nestAccessControl from "nest-access-control";
 import { GqlDefaultAuthGuard } from "../../auth/gqlDefaultAuth.guard";
 import * as gqlACGuard from "../../auth/gqlAC.guard";
-import * as gqlUserRoles from "../../auth/gqlUserRoles.decorator";
-import * as abacUtil from "../../auth/abac.util";
 import { isRecordNotFoundError } from "../../prisma.util";
 import { MetaQueryPayload } from "../../util/MetaQueryPayload";
-import { AclValidateRequestInterceptor } from "../../interceptors/aclValidateRequest.interceptor";
 import { AclFilterResponseInterceptor } from "../../interceptors/aclFilterResponse.interceptor";
+import { AclValidateRequestInterceptor } from "../../interceptors/aclValidateRequest.interceptor";
 import { CreateJobOfferingArgs } from "./CreateJobOfferingArgs";
 import { UpdateJobOfferingArgs } from "./UpdateJobOfferingArgs";
 import { DeleteJobOfferingArgs } from "./DeleteJobOfferingArgs";
@@ -99,7 +97,6 @@ export class JobOfferingResolverBase {
   async createJobOffering(
     @graphql.Args() args: CreateJobOfferingArgs
   ): Promise<JobOffering> {
-    // @ts-ignore
     return await this.service.create({
       ...args,
       data: {
@@ -120,11 +117,9 @@ export class JobOfferingResolverBase {
     possession: "any",
   })
   async updateJobOffering(
-    @graphql.Args() args: UpdateJobOfferingArgs,
-    @gqlUserRoles.UserRoles() userRoles: string[]
+    @graphql.Args() args: UpdateJobOfferingArgs
   ): Promise<JobOffering | null> {
     try {
-      // @ts-ignore
       return await this.service.update({
         ...args,
         data: {
@@ -155,7 +150,6 @@ export class JobOfferingResolverBase {
     @graphql.Args() args: DeleteJobOfferingArgs
   ): Promise<JobOffering | null> {
     try {
-      // @ts-ignore
       return await this.service.delete(args);
     } catch (error) {
       if (isRecordNotFoundError(error)) {

@@ -11,18 +11,16 @@ https://docs.amplication.com/docs/how-to/custom-code
   */
 import * as common from "@nestjs/common";
 import * as swagger from "@nestjs/swagger";
-import * as nestMorgan from "nest-morgan";
 import * as nestAccessControl from "nest-access-control";
 import * as defaultAuthGuard from "../../auth/defaultAuth.guard";
-import * as abacUtil from "../../auth/abac.util";
 import { isRecordNotFoundError } from "../../prisma.util";
 import * as errors from "../../errors";
 import { Request } from "express";
 import { plainToClass } from "class-transformer";
 import { ApiNestedQuery } from "../../decorators/api-nested-query.decorator";
+import { JobApplicantService } from "../jobApplicant.service";
 import { AclValidateRequestInterceptor } from "../../interceptors/aclValidateRequest.interceptor";
 import { AclFilterResponseInterceptor } from "../../interceptors/aclFilterResponse.interceptor";
-import { JobApplicantService } from "../jobApplicant.service";
 import { JobApplicantCreateInput } from "./JobApplicantCreateInput";
 import { JobApplicantWhereInput } from "./JobApplicantWhereInput";
 import { JobApplicantWhereUniqueInput } from "./JobApplicantWhereUniqueInput";
@@ -30,24 +28,20 @@ import { JobApplicantFindManyArgs } from "./JobApplicantFindManyArgs";
 import { JobApplicantUpdateInput } from "./JobApplicantUpdateInput";
 import { JobApplicant } from "./JobApplicant";
 @swagger.ApiBearerAuth()
+@common.UseGuards(defaultAuthGuard.DefaultAuthGuard, nestAccessControl.ACGuard)
 export class JobApplicantControllerBase {
   constructor(
     protected readonly service: JobApplicantService,
     protected readonly rolesBuilder: nestAccessControl.RolesBuilder
   ) {}
 
-  @common.UseInterceptors(nestMorgan.MorganInterceptor("combined"))
   @common.UseInterceptors(AclValidateRequestInterceptor)
-  @common.UseGuards(
-    defaultAuthGuard.DefaultAuthGuard,
-    nestAccessControl.ACGuard
-  )
-  @common.Post()
   @nestAccessControl.UseRoles({
     resource: "JobApplicant",
     action: "create",
     possession: "any",
   })
+  @common.Post()
   @swagger.ApiCreatedResponse({ type: JobApplicant })
   @swagger.ApiForbiddenResponse({ type: errors.ForbiddenException })
   async create(
@@ -83,18 +77,13 @@ export class JobApplicantControllerBase {
     });
   }
 
-  @common.UseInterceptors(nestMorgan.MorganInterceptor("combined"))
   @common.UseInterceptors(AclFilterResponseInterceptor)
-  @common.UseGuards(
-    defaultAuthGuard.DefaultAuthGuard,
-    nestAccessControl.ACGuard
-  )
-  @common.Get()
   @nestAccessControl.UseRoles({
     resource: "JobApplicant",
     action: "read",
     possession: "any",
   })
+  @common.Get()
   @swagger.ApiOkResponse({ type: [JobApplicant] })
   @swagger.ApiForbiddenResponse()
   @ApiNestedQuery(JobApplicantFindManyArgs)
@@ -120,18 +109,13 @@ export class JobApplicantControllerBase {
     });
   }
 
-  @common.UseInterceptors(nestMorgan.MorganInterceptor("combined"))
   @common.UseInterceptors(AclFilterResponseInterceptor)
-  @common.UseGuards(
-    defaultAuthGuard.DefaultAuthGuard,
-    nestAccessControl.ACGuard
-  )
-  @common.Get("/:id")
   @nestAccessControl.UseRoles({
     resource: "JobApplicant",
     action: "read",
     possession: "own",
   })
+  @common.Get("/:id")
   @swagger.ApiOkResponse({ type: JobApplicant })
   @swagger.ApiNotFoundResponse({ type: errors.NotFoundException })
   @swagger.ApiForbiddenResponse({ type: errors.ForbiddenException })
@@ -164,18 +148,13 @@ export class JobApplicantControllerBase {
     return result;
   }
 
-  @common.UseInterceptors(nestMorgan.MorganInterceptor("combined"))
   @common.UseInterceptors(AclValidateRequestInterceptor)
-  @common.UseGuards(
-    defaultAuthGuard.DefaultAuthGuard,
-    nestAccessControl.ACGuard
-  )
-  @common.Patch("/:id")
   @nestAccessControl.UseRoles({
     resource: "JobApplicant",
     action: "update",
     possession: "any",
   })
+  @common.Patch("/:id")
   @swagger.ApiOkResponse({ type: JobApplicant })
   @swagger.ApiNotFoundResponse({ type: errors.NotFoundException })
   @swagger.ApiForbiddenResponse({ type: errors.ForbiddenException })
@@ -223,17 +202,12 @@ export class JobApplicantControllerBase {
     }
   }
 
-  @common.UseInterceptors(nestMorgan.MorganInterceptor("combined"))
-  @common.UseGuards(
-    defaultAuthGuard.DefaultAuthGuard,
-    nestAccessControl.ACGuard
-  )
-  @common.Delete("/:id")
   @nestAccessControl.UseRoles({
     resource: "JobApplicant",
     action: "delete",
     possession: "any",
   })
+  @common.Delete("/:id")
   @swagger.ApiOkResponse({ type: JobApplicant })
   @swagger.ApiNotFoundResponse({ type: errors.NotFoundException })
   @swagger.ApiForbiddenResponse({ type: errors.ForbiddenException })
