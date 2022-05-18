@@ -19,12 +19,22 @@ import * as gqlUserRoles from "../../auth/gqlUserRoles.decorator";
 import * as abacUtil from "../../auth/abac.util";
 import { isRecordNotFoundError } from "../../prisma.util";
 import { MetaQueryPayload } from "../../util/MetaQueryPayload";
+import { AclValidateRequestInterceptor } from "../../interceptors/aclValidateRequest.interceptor";
+import { AclFilterResponseInterceptor } from "../../interceptors/aclFilterResponse.interceptor";
 import { CreateUserArgs } from "./CreateUserArgs";
 import { UpdateUserArgs } from "./UpdateUserArgs";
 import { DeleteUserArgs } from "./DeleteUserArgs";
 import { UserFindManyArgs } from "./UserFindManyArgs";
 import { UserFindUniqueArgs } from "./UserFindUniqueArgs";
 import { User } from "./User";
+import { HousingApplicantFindManyArgs } from "../../housingApplicant/base/HousingApplicantFindManyArgs";
+import { HousingApplicant } from "../../housingApplicant/base/HousingApplicant";
+import { HousingOfferingFindManyArgs } from "../../housingOffering/base/HousingOfferingFindManyArgs";
+import { HousingOffering } from "../../housingOffering/base/HousingOffering";
+import { JobApplicantFindManyArgs } from "../../jobApplicant/base/JobApplicantFindManyArgs";
+import { JobApplicant } from "../../jobApplicant/base/JobApplicant";
+import { JobOfferingFindManyArgs } from "../../jobOffering/base/JobOfferingFindManyArgs";
+import { JobOffering } from "../../jobOffering/base/JobOffering";
 import { UserService } from "../user.service";
 
 @graphql.Resolver(() => User)
@@ -54,80 +64,40 @@ export class UserResolverBase {
     };
   }
 
+  @common.UseInterceptors(AclFilterResponseInterceptor)
   @graphql.Query(() => [User])
   @nestAccessControl.UseRoles({
     resource: "User",
     action: "read",
     possession: "any",
   })
-  async users(
-    @graphql.Args() args: UserFindManyArgs,
-    @gqlUserRoles.UserRoles() userRoles: string[]
-  ): Promise<User[]> {
-    const permission = this.rolesBuilder.permission({
-      role: userRoles,
-      action: "read",
-      possession: "any",
-      resource: "User",
-    });
-    const results = await this.service.findMany(args);
-    return results.map((result) => permission.filter(result));
+  async users(@graphql.Args() args: UserFindManyArgs): Promise<User[]> {
+    return this.service.findMany(args);
   }
 
+  @common.UseInterceptors(AclFilterResponseInterceptor)
   @graphql.Query(() => User, { nullable: true })
   @nestAccessControl.UseRoles({
     resource: "User",
     action: "read",
     possession: "own",
   })
-  async user(
-    @graphql.Args() args: UserFindUniqueArgs,
-    @gqlUserRoles.UserRoles() userRoles: string[]
-  ): Promise<User | null> {
-    const permission = this.rolesBuilder.permission({
-      role: userRoles,
-      action: "read",
-      possession: "own",
-      resource: "User",
-    });
+  async user(@graphql.Args() args: UserFindUniqueArgs): Promise<User | null> {
     const result = await this.service.findOne(args);
     if (result === null) {
       return null;
     }
-    return permission.filter(result);
+    return result;
   }
 
+  @common.UseInterceptors(AclValidateRequestInterceptor)
   @graphql.Mutation(() => User)
   @nestAccessControl.UseRoles({
     resource: "User",
     action: "create",
     possession: "any",
   })
-  async createUser(
-    @graphql.Args() args: CreateUserArgs,
-    @gqlUserRoles.UserRoles() userRoles: string[]
-  ): Promise<User> {
-    const permission = this.rolesBuilder.permission({
-      role: userRoles,
-      action: "create",
-      possession: "any",
-      resource: "User",
-    });
-    const invalidAttributes = abacUtil.getInvalidAttributes(
-      permission,
-      args.data
-    );
-    if (invalidAttributes.length) {
-      const properties = invalidAttributes
-        .map((attribute: string) => JSON.stringify(attribute))
-        .join(", ");
-      const roles = userRoles
-        .map((role: string) => JSON.stringify(role))
-        .join(",");
-      throw new apollo.ApolloError(
-        `providing the properties: ${properties} on ${"User"} creation is forbidden for roles: ${roles}`
-      );
-    }
+  async createUser(@graphql.Args() args: CreateUserArgs): Promise<User> {
     // @ts-ignore
     return await this.service.create({
       ...args,
@@ -135,6 +105,7 @@ export class UserResolverBase {
     });
   }
 
+  @common.UseInterceptors(AclValidateRequestInterceptor)
   @graphql.Mutation(() => User)
   @nestAccessControl.UseRoles({
     resource: "User",
@@ -145,27 +116,6 @@ export class UserResolverBase {
     @graphql.Args() args: UpdateUserArgs,
     @gqlUserRoles.UserRoles() userRoles: string[]
   ): Promise<User | null> {
-    const permission = this.rolesBuilder.permission({
-      role: userRoles,
-      action: "update",
-      possession: "any",
-      resource: "User",
-    });
-    const invalidAttributes = abacUtil.getInvalidAttributes(
-      permission,
-      args.data
-    );
-    if (invalidAttributes.length) {
-      const properties = invalidAttributes
-        .map((attribute: string) => JSON.stringify(attribute))
-        .join(", ");
-      const roles = userRoles
-        .map((role: string) => JSON.stringify(role))
-        .join(",");
-      throw new apollo.ApolloError(
-        `providing the properties: ${properties} on ${"User"} update is forbidden for roles: ${roles}`
-      );
-    }
     try {
       // @ts-ignore
       return await this.service.update({
@@ -200,5 +150,85 @@ export class UserResolverBase {
       }
       throw error;
     }
+  }
+
+  @common.UseInterceptors(AclFilterResponseInterceptor)
+  @graphql.ResolveField(() => [HousingApplicant])
+  @nestAccessControl.UseRoles({
+    resource: "HousingApplicant",
+    action: "read",
+    possession: "any",
+  })
+  async housingApplicants(
+    @graphql.Parent() parent: User,
+    @graphql.Args() args: HousingApplicantFindManyArgs
+  ): Promise<HousingApplicant[]> {
+    const results = await this.service.findHousingApplicants(parent.id, args);
+
+    if (!results) {
+      return [];
+    }
+
+    return results;
+  }
+
+  @common.UseInterceptors(AclFilterResponseInterceptor)
+  @graphql.ResolveField(() => [HousingOffering])
+  @nestAccessControl.UseRoles({
+    resource: "HousingOffering",
+    action: "read",
+    possession: "any",
+  })
+  async housingOfferings(
+    @graphql.Parent() parent: User,
+    @graphql.Args() args: HousingOfferingFindManyArgs
+  ): Promise<HousingOffering[]> {
+    const results = await this.service.findHousingOfferings(parent.id, args);
+
+    if (!results) {
+      return [];
+    }
+
+    return results;
+  }
+
+  @common.UseInterceptors(AclFilterResponseInterceptor)
+  @graphql.ResolveField(() => [JobApplicant])
+  @nestAccessControl.UseRoles({
+    resource: "JobApplicant",
+    action: "read",
+    possession: "any",
+  })
+  async jobApplicants(
+    @graphql.Parent() parent: User,
+    @graphql.Args() args: JobApplicantFindManyArgs
+  ): Promise<JobApplicant[]> {
+    const results = await this.service.findJobApplicants(parent.id, args);
+
+    if (!results) {
+      return [];
+    }
+
+    return results;
+  }
+
+  @common.UseInterceptors(AclFilterResponseInterceptor)
+  @graphql.ResolveField(() => [JobOffering])
+  @nestAccessControl.UseRoles({
+    resource: "JobOffering",
+    action: "read",
+    possession: "any",
+  })
+  async jobOfferings(
+    @graphql.Parent() parent: User,
+    @graphql.Args() args: JobOfferingFindManyArgs
+  ): Promise<JobOffering[]> {
+    const results = await this.service.findJobOfferings(parent.id, args);
+
+    if (!results) {
+      return [];
+    }
+
+    return results;
   }
 }

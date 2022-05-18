@@ -11,7 +11,12 @@ https://docs.amplication.com/docs/how-to/custom-code
   */
 import { InputType, Field } from "@nestjs/graphql";
 import { ApiProperty } from "@nestjs/swagger";
-import { IsString, IsOptional } from "class-validator";
+import { IsString, IsOptional, ValidateNested } from "class-validator";
+import { HousingApplicantCreateNestedManyWithoutUsersInput } from "./HousingApplicantCreateNestedManyWithoutUsersInput";
+import { Type } from "class-transformer";
+import { HousingOfferingCreateNestedManyWithoutUsersInput } from "./HousingOfferingCreateNestedManyWithoutUsersInput";
+import { JobApplicantCreateNestedManyWithoutUsersInput } from "./JobApplicantCreateNestedManyWithoutUsersInput";
+import { JobOfferingCreateNestedManyWithoutUsersInput } from "./JobOfferingCreateNestedManyWithoutUsersInput";
 @InputType()
 class UserCreateInput {
   @ApiProperty({
@@ -23,7 +28,71 @@ class UserCreateInput {
   @Field(() => String, {
     nullable: true,
   })
-  firstName?: string | null;
+  description?: string | null;
+
+  @ApiProperty({
+    required: true,
+    type: String,
+  })
+  @IsString()
+  @Field(() => String)
+  email!: string;
+
+  @ApiProperty({
+    required: true,
+    type: String,
+  })
+  @IsString()
+  @Field(() => String)
+  first_name!: string;
+
+  @ApiProperty({
+    required: false,
+    type: () => HousingApplicantCreateNestedManyWithoutUsersInput,
+  })
+  @ValidateNested()
+  @Type(() => HousingApplicantCreateNestedManyWithoutUsersInput)
+  @IsOptional()
+  @Field(() => HousingApplicantCreateNestedManyWithoutUsersInput, {
+    nullable: true,
+  })
+  housing_applicants?: HousingApplicantCreateNestedManyWithoutUsersInput;
+
+  @ApiProperty({
+    required: false,
+    type: () => HousingOfferingCreateNestedManyWithoutUsersInput,
+  })
+  @ValidateNested()
+  @Type(() => HousingOfferingCreateNestedManyWithoutUsersInput)
+  @IsOptional()
+  @Field(() => HousingOfferingCreateNestedManyWithoutUsersInput, {
+    nullable: true,
+  })
+  housing_offerings?: HousingOfferingCreateNestedManyWithoutUsersInput;
+
+  @ApiProperty({
+    required: false,
+    type: () => JobApplicantCreateNestedManyWithoutUsersInput,
+  })
+  @ValidateNested()
+  @Type(() => JobApplicantCreateNestedManyWithoutUsersInput)
+  @IsOptional()
+  @Field(() => JobApplicantCreateNestedManyWithoutUsersInput, {
+    nullable: true,
+  })
+  job_applicants?: JobApplicantCreateNestedManyWithoutUsersInput;
+
+  @ApiProperty({
+    required: false,
+    type: () => JobOfferingCreateNestedManyWithoutUsersInput,
+  })
+  @ValidateNested()
+  @Type(() => JobOfferingCreateNestedManyWithoutUsersInput)
+  @IsOptional()
+  @Field(() => JobOfferingCreateNestedManyWithoutUsersInput, {
+    nullable: true,
+  })
+  job_offerings?: JobOfferingCreateNestedManyWithoutUsersInput;
 
   @ApiProperty({
     required: false,
@@ -34,7 +103,15 @@ class UserCreateInput {
   @Field(() => String, {
     nullable: true,
   })
-  lastName?: string | null;
+  last_name?: string | null;
+
+  @ApiProperty({
+    required: true,
+    type: String,
+  })
+  @IsString()
+  @Field(() => String)
+  location!: string;
 
   @ApiProperty({
     required: true,
@@ -60,6 +137,22 @@ class UserCreateInput {
   })
   @IsString()
   @Field(() => String)
+  telephone_number!: string;
+
+  @ApiProperty({
+    required: true,
+    type: String,
+  })
+  @IsString()
+  @Field(() => String)
   username!: string;
+
+  @ApiProperty({
+    required: true,
+    type: String,
+  })
+  @IsString()
+  @Field(() => String)
+  user_type!: string;
 }
 export { UserCreateInput };

@@ -1,9 +1,22 @@
 import { StringNullableFilter } from "../../util/StringNullableFilter";
 import { StringFilter } from "../../util/StringFilter";
+import { HousingApplicantListRelationFilter } from "../housingApplicant/HousingApplicantListRelationFilter";
+import { HousingOfferingListRelationFilter } from "../housingOffering/HousingOfferingListRelationFilter";
+import { JobApplicantListRelationFilter } from "../jobApplicant/JobApplicantListRelationFilter";
+import { JobOfferingListRelationFilter } from "../jobOffering/JobOfferingListRelationFilter";
 
 export type UserWhereInput = {
-  firstName?: StringNullableFilter;
+  description?: StringNullableFilter;
+  email?: StringFilter;
+  first_name?: StringFilter;
+  housing_applicants?: HousingApplicantListRelationFilter;
+  housing_offerings?: HousingOfferingListRelationFilter;
   id?: StringFilter;
-  lastName?: StringNullableFilter;
+  job_applicants?: JobApplicantListRelationFilter;
+  job_offerings?: JobOfferingListRelationFilter;
+  last_name?: StringNullableFilter;
+  location?: StringFilter;
+  telephone_number?: StringFilter;
   username?: StringFilter;
+  user_type?: StringFilter;
 };
