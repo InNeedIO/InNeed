@@ -25,16 +25,6 @@ model User {
   user_type          String
 }
 
-model Need {
-  createdAt   DateTime         @default(now())
-  description String
-  id          String           @id @default(cuid())
-  isOffer     Boolean
-  needType    EnumNeedNeedType
-  title       String
-  updatedAt   DateTime         @updatedAt
-}
-
 model JobApplicant {
   id                String      @id @default(cuid())
   job_offering_id   JobOffering @relation(fields: [job_offering_idId], references: [id])
@@ -77,10 +67,4 @@ model HousingApplicant {
   id                   String          @id @default(cuid())
   user_id              User            @relation(fields: [user_idId], references: [id])
   user_idId            String
-}
-
-enum EnumNeedNeedType {
-  Home
-  Work
-  Transport
 }

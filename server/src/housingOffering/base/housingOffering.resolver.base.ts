@@ -15,12 +15,10 @@ import * as apollo from "apollo-server-express";
 import * as nestAccessControl from "nest-access-control";
 import { GqlDefaultAuthGuard } from "../../auth/gqlDefaultAuth.guard";
 import * as gqlACGuard from "../../auth/gqlAC.guard";
-import * as gqlUserRoles from "../../auth/gqlUserRoles.decorator";
-import * as abacUtil from "../../auth/abac.util";
 import { isRecordNotFoundError } from "../../prisma.util";
 import { MetaQueryPayload } from "../../util/MetaQueryPayload";
-import { AclValidateRequestInterceptor } from "../../interceptors/aclValidateRequest.interceptor";
 import { AclFilterResponseInterceptor } from "../../interceptors/aclFilterResponse.interceptor";
+import { AclValidateRequestInterceptor } from "../../interceptors/aclValidateRequest.interceptor";
 import { CreateHousingOfferingArgs } from "./CreateHousingOfferingArgs";
 import { UpdateHousingOfferingArgs } from "./UpdateHousingOfferingArgs";
 import { DeleteHousingOfferingArgs } from "./DeleteHousingOfferingArgs";
@@ -99,7 +97,6 @@ export class HousingOfferingResolverBase {
   async createHousingOffering(
     @graphql.Args() args: CreateHousingOfferingArgs
   ): Promise<HousingOffering> {
-    // @ts-ignore
     return await this.service.create({
       ...args,
       data: {
@@ -120,11 +117,9 @@ export class HousingOfferingResolverBase {
     possession: "any",
   })
   async updateHousingOffering(
-    @graphql.Args() args: UpdateHousingOfferingArgs,
-    @gqlUserRoles.UserRoles() userRoles: string[]
+    @graphql.Args() args: UpdateHousingOfferingArgs
   ): Promise<HousingOffering | null> {
     try {
-      // @ts-ignore
       return await this.service.update({
         ...args,
         data: {
@@ -155,7 +150,6 @@ export class HousingOfferingResolverBase {
     @graphql.Args() args: DeleteHousingOfferingArgs
   ): Promise<HousingOffering | null> {
     try {
-      // @ts-ignore
       return await this.service.delete(args);
     } catch (error) {
       if (isRecordNotFoundError(error)) {
