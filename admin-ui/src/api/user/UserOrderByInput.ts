@@ -11,5 +11,4 @@ export type UserOrderByInput = {
   roles?: SortOrder;
   telephone_number?: SortOrder;
   username?: SortOrder;
-  user_type?: SortOrder;
 };

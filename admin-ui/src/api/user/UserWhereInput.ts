@@ -18,5 +18,4 @@ export type UserWhereInput = {
   location?: StringFilter;
   telephone_number?: StringFilter;
   username?: StringFilter;
-  user_type?: StringFilter;
 };

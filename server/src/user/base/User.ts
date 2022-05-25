@@ -131,13 +131,5 @@ class User {
   @IsString()
   @Field(() => String)
   username!: string;
-
-  @ApiProperty({
-    required: true,
-    type: String,
-  })
-  @IsString()
-  @Field(() => String)
-  user_type!: string;
 }
 export { User };

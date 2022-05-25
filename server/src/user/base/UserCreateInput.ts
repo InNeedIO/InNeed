@@ -143,13 +143,5 @@ class UserCreateInput {
   @IsString()
   @Field(() => String)
   username!: string;
-
-  @ApiProperty({
-    required: true,
-    type: String,
-  })
-  @IsString()
-  @Field(() => String)
-  user_type!: string;
 }
 export { UserCreateInput };

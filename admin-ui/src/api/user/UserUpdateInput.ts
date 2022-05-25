@@ -17,5 +17,4 @@ export type UserUpdateInput = {
   roles?: Array<string>;
   telephone_number?: string;
   username?: string;
-  user_type?: string;
 };
