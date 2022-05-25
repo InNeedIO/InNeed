@@ -11,7 +11,7 @@ export type UserCreateInput = {
   housing_offerings?: HousingOfferingCreateNestedManyWithoutUsersInput;
   job_applicants?: JobApplicantCreateNestedManyWithoutUsersInput;
   job_offerings?: JobOfferingCreateNestedManyWithoutUsersInput;
-  last_name?: string | null;
+  last_name: string;
   location: string;
   password: string;
   roles: Array<string>;

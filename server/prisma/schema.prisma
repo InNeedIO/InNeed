@@ -16,7 +16,7 @@ model User {
   id                 String             @id @default(cuid())
   job_applicants     JobApplicant[]
   job_offerings      JobOffering[]
-  last_name          String?
+  last_name          String
   location           String
   password           String
   roles              String[]

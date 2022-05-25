@@ -12,7 +12,7 @@ export type User = {
   id: string;
   job_applicants?: Array<JobApplicant>;
   job_offerings?: Array<JobOffering>;
-  last_name: string | null;
+  last_name: string;
   location: string;
   roles: Array<string>;
   telephone_number: string;

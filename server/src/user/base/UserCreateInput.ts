@@ -95,15 +95,12 @@ class UserCreateInput {
   job_offerings?: JobOfferingCreateNestedManyWithoutUsersInput;
 
   @ApiProperty({
-    required: false,
+    required: true,
     type: String,
   })
   @IsString()
-  @IsOptional()
-  @Field(() => String, {
-    nullable: true,
-  })
-  last_name?: string | null;
+  @Field(() => String)
+  last_name!: string;
 
   @ApiProperty({
     required: true,
