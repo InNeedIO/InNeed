@@ -22,7 +22,6 @@ model User {
   roles              String[]
   telephone_number   String
   username           String             @unique
-  user_type          String
 }
 
 model JobApplicant {

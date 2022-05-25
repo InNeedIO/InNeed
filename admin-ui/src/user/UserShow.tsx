@@ -27,7 +27,6 @@ export const UserShow = (props: ShowProps): React.ReactElement => {
         <TextField label="Roles" source="roles" />
         <TextField label="Telephone number" source="telephone_number" />
         <TextField label="Username" source="username" />
-        <TextField label="User type" source="user_type" />
         <ReferenceManyField
           reference="HousingApplicant"
           target="UserId"

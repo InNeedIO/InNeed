@@ -34,7 +34,6 @@ async function seed(bcryptSalt: Salt) {
     last_name: "",
     location: "",
     telephone_number: "",
-    user_type: "",
   };
   await client.user.upsert({
     where: { username: data.username },

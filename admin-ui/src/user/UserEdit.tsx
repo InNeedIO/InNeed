@@ -66,7 +66,6 @@ export const UserEdit = (props: EditProps): React.ReactElement => {
         />
         <TextInput label="Telephone number" source="telephone_number" />
         <TextInput label="Username" source="username" />
-        <TextInput label="User type" source="user_type" />
       </SimpleForm>
     </Edit>
   );

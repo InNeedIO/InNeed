@@ -69,7 +69,6 @@ export class UserControllerBase {
         roles: true,
         telephone_number: true,
         username: true,
-        user_type: true,
       },
     });
   }
@@ -98,7 +97,6 @@ export class UserControllerBase {
         roles: true,
         telephone_number: true,
         username: true,
-        user_type: true,
       },
     });
   }
@@ -128,7 +126,6 @@ export class UserControllerBase {
         roles: true,
         telephone_number: true,
         username: true,
-        user_type: true,
       },
     });
     if (result === null) {
@@ -167,7 +164,6 @@ export class UserControllerBase {
           roles: true,
           telephone_number: true,
           username: true,
-          user_type: true,
         },
       });
     } catch (error) {
@@ -205,7 +201,6 @@ export class UserControllerBase {
           roles: true,
           telephone_number: true,
           username: true,
-          user_type: true,
         },
       });
     } catch (error) {
