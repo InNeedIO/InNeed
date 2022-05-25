@@ -21,7 +21,6 @@ const CREATE_INPUT = {
   roles: ["exampleRoles"],
   telephone_number: "exampleTelephoneNumber",
   username: "exampleUsername",
-  user_type: "exampleUserType",
 };
 const CREATE_RESULT = {
   description: "exampleDescription",
@@ -34,7 +33,6 @@ const CREATE_RESULT = {
   roles: ["exampleRoles"],
   telephone_number: "exampleTelephoneNumber",
   username: "exampleUsername",
-  user_type: "exampleUserType",
 };
 const FIND_MANY_RESULT = [
   {
@@ -48,7 +46,6 @@ const FIND_MANY_RESULT = [
     roles: ["exampleRoles"],
     telephone_number: "exampleTelephoneNumber",
     username: "exampleUsername",
-    user_type: "exampleUserType",
   },
 ];
 const FIND_ONE_RESULT = {
@@ -62,7 +59,6 @@ const FIND_ONE_RESULT = {
   roles: ["exampleRoles"],
   telephone_number: "exampleTelephoneNumber",
   username: "exampleUsername",
-  user_type: "exampleUserType",
 };
 
 const service = {

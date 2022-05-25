@@ -6,16 +6,15 @@ import { JobOfferingCreateNestedManyWithoutUsersInput } from "./JobOfferingCreat
 export type UserCreateInput = {
   description?: string | null;
   email: string;
-  first_name: string;
+  first_name?: string | null;
   housing_applicants?: HousingApplicantCreateNestedManyWithoutUsersInput;
   housing_offerings?: HousingOfferingCreateNestedManyWithoutUsersInput;
   job_applicants?: JobApplicantCreateNestedManyWithoutUsersInput;
   job_offerings?: JobOfferingCreateNestedManyWithoutUsersInput;
-  last_name: string;
+  last_name?: string | null;
   location: string;
   password: string;
   roles: Array<string>;
   telephone_number: string;
   username: string;
-  user_type: string;
 };

@@ -8,15 +8,14 @@ import { JobOfferingListRelationFilter } from "../jobOffering/JobOfferingListRel
 export type UserWhereInput = {
   description?: StringNullableFilter;
   email?: StringFilter;
-  first_name?: StringFilter;
+  first_name?: StringNullableFilter;
   housing_applicants?: HousingApplicantListRelationFilter;
   housing_offerings?: HousingOfferingListRelationFilter;
   id?: StringFilter;
   job_applicants?: JobApplicantListRelationFilter;
   job_offerings?: JobOfferingListRelationFilter;
-  last_name?: StringFilter;
+  last_name?: StringNullableFilter;
   location?: StringFilter;
   telephone_number?: StringFilter;
   username?: StringFilter;
-  user_type?: StringFilter;
 };

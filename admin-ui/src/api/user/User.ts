@@ -6,16 +6,15 @@ import { JobOffering } from "../jobOffering/JobOffering";
 export type User = {
   description: string | null;
   email: string;
-  first_name: string;
+  first_name: string | null;
   housing_applicants?: Array<HousingApplicant>;
   housing_offerings?: Array<HousingOffering>;
   id: string;
   job_applicants?: Array<JobApplicant>;
   job_offerings?: Array<JobOffering>;
-  last_name: string;
+  last_name: string | null;
   location: string;
   roles: Array<string>;
   telephone_number: string;
   username: string;
-  user_type: string;
 };

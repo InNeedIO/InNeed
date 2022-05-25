@@ -21,7 +21,6 @@ export const UserList = (props: ListProps): React.ReactElement => {
         <TextField label="Roles" source="roles" />
         <TextField label="Telephone number" source="telephone_number" />
         <TextField label="Username" source="username" />
-        <TextField label="User type" source="user_type" />
       </Datagrid>
     </List>
   );
