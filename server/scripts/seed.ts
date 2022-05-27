@@ -30,8 +30,6 @@ async function seed(bcryptSalt: Salt) {
     password: await hash("admin", bcryptSalt),
     roles: ["user"],
     email: "example@example.com",
-    first_name: "",
-    last_name: "",
     location: "",
     telephone_number: "",
   };

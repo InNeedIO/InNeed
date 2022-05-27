@@ -6,12 +6,12 @@ import { JobOfferingUpdateManyWithoutUsersInput } from "./JobOfferingUpdateManyW
 export type UserUpdateInput = {
   description?: string | null;
   email?: string;
-  first_name?: string;
+  first_name?: string | null;
   housing_applicants?: HousingApplicantUpdateManyWithoutUsersInput;
   housing_offerings?: HousingOfferingUpdateManyWithoutUsersInput;
   job_applicants?: JobApplicantUpdateManyWithoutUsersInput;
   job_offerings?: JobOfferingUpdateManyWithoutUsersInput;
-  last_name?: string;
+  last_name?: string | null;
   location?: string;
   password?: string;
   roles?: Array<string>;

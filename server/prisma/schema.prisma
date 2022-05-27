@@ -10,13 +10,13 @@ generator client {
 model User {
   description        String?
   email              String             @unique
-  first_name         String
+  first_name         String?
   housing_applicants HousingApplicant[]
   housing_offerings  HousingOffering[]
   id                 String             @id @default(cuid())
   job_applicants     JobApplicant[]
   job_offerings      JobOffering[]
-  last_name          String
+  last_name          String?
   location           String
   password           String
   roles              String[]

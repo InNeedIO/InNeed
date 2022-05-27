@@ -45,14 +45,14 @@ class UserWhereInput {
 
   @ApiProperty({
     required: false,
-    type: StringFilter,
+    type: StringNullableFilter,
   })
-  @Type(() => StringFilter)
+  @Type(() => StringNullableFilter)
   @IsOptional()
-  @Field(() => StringFilter, {
+  @Field(() => StringNullableFilter, {
     nullable: true,
   })
-  first_name?: StringFilter;
+  first_name?: StringNullableFilter;
 
   @ApiProperty({
     required: false,
@@ -115,14 +115,14 @@ class UserWhereInput {
 
   @ApiProperty({
     required: false,
-    type: StringFilter,
+    type: StringNullableFilter,
   })
-  @Type(() => StringFilter)
+  @Type(() => StringNullableFilter)
   @IsOptional()
-  @Field(() => StringFilter, {
+  @Field(() => StringNullableFilter, {
     nullable: true,
   })
-  last_name?: StringFilter;
+  last_name?: StringNullableFilter;
 
   @ApiProperty({
     required: false,

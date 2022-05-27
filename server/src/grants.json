@@ -26,30 +26,6 @@
   {
     "role": "needy",
     "resource": "User",
-    "action": "create:any",
-    "attributes": "*"
-  },
-  {
-    "role": "helper",
-    "resource": "User",
-    "action": "create:any",
-    "attributes": "*"
-  },
-  {
-    "role": "user",
-    "resource": "User",
-    "action": "create:any",
-    "attributes": "*"
-  },
-  {
-    "role": "admin",
-    "resource": "User",
-    "action": "create:any",
-    "attributes": "*"
-  },
-  {
-    "role": "needy",
-    "resource": "User",
     "action": "update:any",
     "attributes": "*"
   },

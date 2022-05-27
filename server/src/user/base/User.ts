@@ -39,12 +39,15 @@ class User {
   email!: string;
 
   @ApiProperty({
-    required: true,
+    required: false,
     type: String,
   })
   @IsString()
-  @Field(() => String)
-  first_name!: string;
+  @IsOptional()
+  @Field(() => String, {
+    nullable: true,
+  })
+  first_name!: string | null;
 
   @ApiProperty({
     required: false,
@@ -91,12 +94,15 @@ class User {
   job_offerings?: Array<JobOffering>;
 
   @ApiProperty({
-    required: true,
+    required: false,
     type: String,
   })
   @IsString()
-  @Field(() => String)
-  last_name!: string;
+  @IsOptional()
+  @Field(() => String, {
+    nullable: true,
+  })
+  last_name!: string | null;
 
   @ApiProperty({
     required: true,
