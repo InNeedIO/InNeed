@@ -9,7 +9,6 @@ generator client {
 
 model User {
   description        String?
-  email              String             @unique
   first_name         String?
   housing_applicants HousingApplicant[]
   housing_offerings  HousingOffering[]
@@ -17,10 +16,10 @@ model User {
   job_applicants     JobApplicant[]
   job_offerings      JobOffering[]
   last_name          String?
-  location           String
+  location           String?
   password           String
   roles              String[]
-  telephone_number   String
+  telephone_number   String?
   username           String             @unique
 }
 

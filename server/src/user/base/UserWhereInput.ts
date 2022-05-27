@@ -14,9 +14,9 @@ import { ApiProperty } from "@nestjs/swagger";
 import { StringNullableFilter } from "../../util/StringNullableFilter";
 import { Type } from "class-transformer";
 import { IsOptional, ValidateNested } from "class-validator";
-import { StringFilter } from "../../util/StringFilter";
 import { HousingApplicantListRelationFilter } from "../../housingApplicant/base/HousingApplicantListRelationFilter";
 import { HousingOfferingListRelationFilter } from "../../housingOffering/base/HousingOfferingListRelationFilter";
+import { StringFilter } from "../../util/StringFilter";
 import { JobApplicantListRelationFilter } from "../../jobApplicant/base/JobApplicantListRelationFilter";
 import { JobOfferingListRelationFilter } from "../../jobOffering/base/JobOfferingListRelationFilter";
 @InputType()
@@ -31,17 +31,6 @@ class UserWhereInput {
     nullable: true,
   })
   description?: StringNullableFilter;
-
-  @ApiProperty({
-    required: false,
-    type: StringFilter,
-  })
-  @Type(() => StringFilter)
-  @IsOptional()
-  @Field(() => StringFilter, {
-    nullable: true,
-  })
-  email?: StringFilter;
 
   @ApiProperty({
     required: false,
@@ -126,25 +115,25 @@ class UserWhereInput {
 
   @ApiProperty({
     required: false,
-    type: StringFilter,
+    type: StringNullableFilter,
   })
-  @Type(() => StringFilter)
+  @Type(() => StringNullableFilter)
   @IsOptional()
-  @Field(() => StringFilter, {
+  @Field(() => StringNullableFilter, {
     nullable: true,
   })
-  location?: StringFilter;
+  location?: StringNullableFilter;
 
   @ApiProperty({
     required: false,
-    type: StringFilter,
+    type: StringNullableFilter,
   })
-  @Type(() => StringFilter)
+  @Type(() => StringNullableFilter)
   @IsOptional()
-  @Field(() => StringFilter, {
+  @Field(() => StringNullableFilter, {
     nullable: true,
   })
-  telephone_number?: StringFilter;
+  telephone_number?: StringNullableFilter;
 
   @ApiProperty({
     required: false,
