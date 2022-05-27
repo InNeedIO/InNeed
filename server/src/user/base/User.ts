@@ -31,14 +31,6 @@ class User {
   description!: string | null;
 
   @ApiProperty({
-    required: true,
-    type: String,
-  })
-  @IsString()
-  @Field(() => String)
-  email!: string;
-
-  @ApiProperty({
     required: false,
     type: String,
   })
@@ -105,12 +97,15 @@ class User {
   last_name!: string | null;
 
   @ApiProperty({
-    required: true,
+    required: false,
     type: String,
   })
   @IsString()
-  @Field(() => String)
-  location!: string;
+  @IsOptional()
+  @Field(() => String, {
+    nullable: true,
+  })
+  location!: string | null;
 
   @ApiProperty({
     required: true,
@@ -123,12 +118,15 @@ class User {
   roles!: Array<string>;
 
   @ApiProperty({
-    required: true,
+    required: false,
     type: String,
   })
   @IsString()
-  @Field(() => String)
-  telephone_number!: string;
+  @IsOptional()
+  @Field(() => String, {
+    nullable: true,
+  })
+  telephone_number!: string | null;
 
   @ApiProperty({
     required: true,

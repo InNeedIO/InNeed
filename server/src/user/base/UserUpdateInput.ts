@@ -39,17 +39,6 @@ class UserUpdateInput {
   @Field(() => String, {
     nullable: true,
   })
-  email?: string;
-
-  @ApiProperty({
-    required: false,
-    type: String,
-  })
-  @IsString()
-  @IsOptional()
-  @Field(() => String, {
-    nullable: true,
-  })
   first_name?: string | null;
 
   @ApiProperty({
@@ -120,7 +109,7 @@ class UserUpdateInput {
   @Field(() => String, {
     nullable: true,
   })
-  location?: string;
+  location?: string | null;
 
   @ApiProperty({
     required: false,
@@ -155,7 +144,7 @@ class UserUpdateInput {
   @Field(() => String, {
     nullable: true,
   })
-  telephone_number?: string;
+  telephone_number?: string | null;
 
   @ApiProperty({
     required: false,

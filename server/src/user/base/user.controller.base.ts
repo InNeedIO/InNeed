@@ -57,7 +57,6 @@ export class UserControllerBase {
       data: data,
       select: {
         description: true,
-        email: true,
         first_name: true,
         id: true,
         last_name: true,
@@ -85,7 +84,6 @@ export class UserControllerBase {
       ...args,
       select: {
         description: true,
-        email: true,
         first_name: true,
         id: true,
         last_name: true,
@@ -114,7 +112,6 @@ export class UserControllerBase {
       where: params,
       select: {
         description: true,
-        email: true,
         first_name: true,
         id: true,
         last_name: true,
@@ -152,7 +149,6 @@ export class UserControllerBase {
         data: data,
         select: {
           description: true,
-          email: true,
           first_name: true,
           id: true,
           last_name: true,
@@ -189,7 +185,6 @@ export class UserControllerBase {
         where: params,
         select: {
           description: true,
-          email: true,
           first_name: true,
           id: true,
           last_name: true,
