@@ -12,7 +12,7 @@ https://docs.amplication.com/docs/how-to/custom-code
 import { InputType, Field } from "@nestjs/graphql";
 import { ApiProperty } from "@nestjs/swagger";
 import { HousingOfferingWhereUniqueInput } from "../../housingOffering/base/HousingOfferingWhereUniqueInput";
-import { ValidateNested } from "class-validator";
+import { ValidateNested, IsBoolean, IsOptional } from "class-validator";
 import { Type } from "class-transformer";
 import { UserWhereUniqueInput } from "../../user/base/UserWhereUniqueInput";
 @InputType()
@@ -25,6 +25,17 @@ class HousingApplicantCreateInput {
   @Type(() => HousingOfferingWhereUniqueInput)
   @Field(() => HousingOfferingWhereUniqueInput)
   house_offeringI_id!: HousingOfferingWhereUniqueInput;
+
+  @ApiProperty({
+    required: false,
+    type: Boolean,
+  })
+  @IsBoolean()
+  @IsOptional()
+  @Field(() => Boolean, {
+    nullable: true,
+  })
+  isAccepted?: boolean | null;
 
   @ApiProperty({
     required: true,
