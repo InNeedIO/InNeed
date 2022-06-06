@@ -3,3 +3,8 @@
 def bearer_token():
     return "Bearer {token}"
 ```
+
+## In order to install dependencies execute:
+```
+pip install -r /path/to/qa/requirements.txt
+```
