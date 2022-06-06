@@ -11,7 +11,12 @@ https://docs.amplication.com/docs/how-to/custom-code
   */
 import { ObjectType, Field } from "@nestjs/graphql";
 import { ApiProperty } from "@nestjs/swagger";
-import { IsString, ValidateNested } from "class-validator";
+import {
+  IsString,
+  IsBoolean,
+  IsOptional,
+  ValidateNested,
+} from "class-validator";
 import { JobOffering } from "../../jobOffering/base/JobOffering";
 import { Type } from "class-transformer";
 import { User } from "../../user/base/User";
@@ -24,6 +29,17 @@ class JobApplicant {
   @IsString()
   @Field(() => String)
   id!: string;
+
+  @ApiProperty({
+    required: false,
+    type: Boolean,
+  })
+  @IsBoolean()
+  @IsOptional()
+  @Field(() => Boolean, {
+    nullable: true,
+  })
+  isAccepted!: boolean | null;
 
   @ApiProperty({
     required: true,

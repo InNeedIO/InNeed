@@ -67,6 +67,7 @@ export class HousingApplicantControllerBase {
         },
 
         id: true,
+        isAccepted: true,
 
         user_id: {
           select: {
@@ -99,6 +100,7 @@ export class HousingApplicantControllerBase {
         },
 
         id: true,
+        isAccepted: true,
 
         user_id: {
           select: {
@@ -132,6 +134,7 @@ export class HousingApplicantControllerBase {
         },
 
         id: true,
+        isAccepted: true,
 
         user_id: {
           select: {
@@ -184,6 +187,7 @@ export class HousingApplicantControllerBase {
           },
 
           id: true,
+          isAccepted: true,
 
           user_id: {
             select: {
@@ -225,6 +229,7 @@ export class HousingApplicantControllerBase {
           },
 
           id: true,
+          isAccepted: true,
 
           user_id: {
             select: {
