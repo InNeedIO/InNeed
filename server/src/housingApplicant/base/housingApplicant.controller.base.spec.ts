@@ -12,21 +12,17 @@ const nonExistingId = "nonExistingId";
 const existingId = "existingId";
 const CREATE_INPUT = {
   id: "exampleId",
-  isAccepted: "true",
 };
 const CREATE_RESULT = {
   id: "exampleId",
-  isAccepted: "true",
 };
 const FIND_MANY_RESULT = [
   {
     id: "exampleId",
-    isAccepted: "true",
   },
 ];
 const FIND_ONE_RESULT = {
   id: "exampleId",
-  isAccepted: "true",
 };
 
 const service = {

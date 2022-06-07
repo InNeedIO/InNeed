@@ -4,7 +4,6 @@ import {
   Datagrid,
   ListProps,
   TextField,
-  BooleanField,
   ReferenceField,
 } from "react-admin";
 import Pagination from "../Components/Pagination";
@@ -22,7 +21,6 @@ export const JobApplicantList = (props: ListProps): React.ReactElement => {
     >
       <Datagrid rowClick="show">
         <TextField label="ID" source="id" />
-        <BooleanField label="isAccepted" source="isAccepted" />
         <ReferenceField
           label="Job offering ID"
           source="joboffering.id"

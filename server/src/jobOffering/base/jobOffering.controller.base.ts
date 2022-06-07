@@ -260,7 +260,6 @@ export class JobOfferingControllerBase {
       ...query,
       select: {
         id: true,
-        isAccepted: true,
 
         job_offering_id: {
           select: {

@@ -3,7 +3,6 @@ import {
   Create,
   SimpleForm,
   CreateProps,
-  BooleanInput,
   ReferenceInput,
   SelectInput,
 } from "react-admin";
@@ -14,7 +13,6 @@ export const JobApplicantCreate = (props: CreateProps): React.ReactElement => {
   return (
     <Create {...props}>
       <SimpleForm>
-        <BooleanInput label="isAccepted" source="isAccepted" />
         <ReferenceInput
           source="joboffering.id"
           reference="JobOffering"

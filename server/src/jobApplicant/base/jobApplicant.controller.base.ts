@@ -61,7 +61,6 @@ export class JobApplicantControllerBase {
       },
       select: {
         id: true,
-        isAccepted: true,
 
         job_offering_id: {
           select: {
@@ -94,7 +93,6 @@ export class JobApplicantControllerBase {
       ...args,
       select: {
         id: true,
-        isAccepted: true,
 
         job_offering_id: {
           select: {
@@ -128,7 +126,6 @@ export class JobApplicantControllerBase {
       where: params,
       select: {
         id: true,
-        isAccepted: true,
 
         job_offering_id: {
           select: {
@@ -181,7 +178,6 @@ export class JobApplicantControllerBase {
         },
         select: {
           id: true,
-          isAccepted: true,
 
           job_offering_id: {
             select: {
@@ -223,7 +219,6 @@ export class JobApplicantControllerBase {
         where: params,
         select: {
           id: true,
-          isAccepted: true,
 
           job_offering_id: {
             select: {

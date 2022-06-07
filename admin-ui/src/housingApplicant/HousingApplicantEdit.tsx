@@ -5,7 +5,6 @@ import {
   EditProps,
   ReferenceInput,
   SelectInput,
-  BooleanInput,
 } from "react-admin";
 import { HousingOfferingTitle } from "../housingOffering/HousingOfferingTitle";
 import { UserTitle } from "../user/UserTitle";
@@ -21,7 +20,6 @@ export const HousingApplicantEdit = (props: EditProps): React.ReactElement => {
         >
           <SelectInput optionText={HousingOfferingTitle} />
         </ReferenceInput>
-        <BooleanInput label="isAccepted" source="isAccepted" />
         <ReferenceInput source="user.id" reference="User" label="User ID">
           <SelectInput optionText={UserTitle} />
         </ReferenceInput>

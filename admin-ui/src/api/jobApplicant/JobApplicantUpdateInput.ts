@@ -2,7 +2,6 @@ import { JobOfferingWhereUniqueInput } from "../jobOffering/JobOfferingWhereUniq
 import { UserWhereUniqueInput } from "../user/UserWhereUniqueInput";
 
 export type JobApplicantUpdateInput = {
-  isAccepted?: boolean | null;
   job_offering_id?: JobOfferingWhereUniqueInput;
   user_id?: UserWhereUniqueInput;
 };
