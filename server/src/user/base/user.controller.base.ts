@@ -227,7 +227,6 @@ export class UserControllerBase {
         },
 
         id: true,
-        isAccepted: true,
 
         user_id: {
           select: {
@@ -434,7 +433,6 @@ export class UserControllerBase {
       ...query,
       select: {
         id: true,
-        isAccepted: true,
 
         job_offering_id: {
           select: {

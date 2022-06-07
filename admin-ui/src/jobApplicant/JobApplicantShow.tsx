@@ -4,7 +4,6 @@ import {
   SimpleShowLayout,
   ShowProps,
   TextField,
-  BooleanField,
   ReferenceField,
 } from "react-admin";
 import { JOBOFFERING_TITLE_FIELD } from "../jobOffering/JobOfferingTitle";
@@ -15,7 +14,6 @@ export const JobApplicantShow = (props: ShowProps): React.ReactElement => {
     <Show {...props}>
       <SimpleShowLayout>
         <TextField label="ID" source="id" />
-        <BooleanField label="isAccepted" source="isAccepted" />
         <ReferenceField
           label="Job offering ID"
           source="joboffering.id"

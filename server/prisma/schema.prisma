@@ -36,7 +36,6 @@ model User {
 
 model JobApplicant {
   id                String      @id @default(cuid())
-  isAccepted        Boolean?
   job_offering_id   JobOffering @relation(fields: [job_offering_idId], references: [id])
   job_offering_idId String
   user_id           User        @relation(fields: [user_idId], references: [id])
@@ -75,7 +74,6 @@ model HousingApplicant {
   house_offeringI_id   HousingOffering @relation(fields: [house_offeringI_idId], references: [id])
   house_offeringI_idId String
   id                   String          @id @default(cuid())
-  isAccepted           Boolean?
   user_id              User            @relation(fields: [user_idId], references: [id])
   user_idId            String
 }

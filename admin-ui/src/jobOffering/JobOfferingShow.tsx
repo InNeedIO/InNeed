@@ -8,7 +8,6 @@ import {
   TextField,
   ReferenceManyField,
   Datagrid,
-  BooleanField,
 } from "react-admin";
 
 import { JOBOFFERING_TITLE_FIELD } from "./JobOfferingTitle";
@@ -36,7 +35,6 @@ export const JobOfferingShow = (props: ShowProps): React.ReactElement => {
         >
           <Datagrid rowClick="show">
             <TextField label="ID" source="id" />
-            <BooleanField label="isAccepted" source="isAccepted" />
             <ReferenceField
               label="Job offering ID"
               source="joboffering.id"

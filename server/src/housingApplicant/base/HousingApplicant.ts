@@ -12,12 +12,7 @@ https://docs.amplication.com/docs/how-to/custom-code
 import { ObjectType, Field } from "@nestjs/graphql";
 import { ApiProperty } from "@nestjs/swagger";
 import { HousingOffering } from "../../housingOffering/base/HousingOffering";
-import {
-  ValidateNested,
-  IsString,
-  IsBoolean,
-  IsOptional,
-} from "class-validator";
+import { ValidateNested, IsString } from "class-validator";
 import { Type } from "class-transformer";
 import { User } from "../../user/base/User";
 @ObjectType()
@@ -37,17 +32,6 @@ class HousingApplicant {
   @IsString()
   @Field(() => String)
   id!: string;
-
-  @ApiProperty({
-    required: false,
-    type: Boolean,
-  })
-  @IsBoolean()
-  @IsOptional()
-  @Field(() => Boolean, {
-    nullable: true,
-  })
-  isAccepted!: boolean | null;
 
   @ApiProperty({
     required: true,

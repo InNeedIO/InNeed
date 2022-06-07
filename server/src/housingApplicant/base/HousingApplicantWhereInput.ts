@@ -15,7 +15,6 @@ import { HousingOfferingWhereUniqueInput } from "../../housingOffering/base/Hous
 import { ValidateNested, IsOptional } from "class-validator";
 import { Type } from "class-transformer";
 import { StringFilter } from "../../util/StringFilter";
-import { BooleanNullableFilter } from "../../util/BooleanNullableFilter";
 import { UserWhereUniqueInput } from "../../user/base/UserWhereUniqueInput";
 @InputType()
 class HousingApplicantWhereInput {
@@ -41,17 +40,6 @@ class HousingApplicantWhereInput {
     nullable: true,
   })
   id?: StringFilter;
-
-  @ApiProperty({
-    required: false,
-    type: BooleanNullableFilter,
-  })
-  @Type(() => BooleanNullableFilter)
-  @IsOptional()
-  @Field(() => BooleanNullableFilter, {
-    nullable: true,
-  })
-  isAccepted?: BooleanNullableFilter;
 
   @ApiProperty({
     required: false,

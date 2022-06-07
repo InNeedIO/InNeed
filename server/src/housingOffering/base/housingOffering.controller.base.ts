@@ -271,7 +271,6 @@ export class HousingOfferingControllerBase {
         },
 
         id: true,
-        isAccepted: true,
 
         user_id: {
           select: {
