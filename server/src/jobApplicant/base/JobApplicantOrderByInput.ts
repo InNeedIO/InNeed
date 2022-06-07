@@ -34,6 +34,15 @@ class JobApplicantOrderByInput {
   @Field(() => SortOrder, {
     nullable: true,
   })
+  isAccepted?: SortOrder;
+
+  @ApiProperty({
+    required: false,
+    enum: ["asc", "desc"],
+  })
+  @Field(() => SortOrder, {
+    nullable: true,
+  })
   job_offering_idId?: SortOrder;
 
   @ApiProperty({

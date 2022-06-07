@@ -1,0 +1,499 @@
+# ------------------------------------------------------
+# THIS FILE WAS AUTOMATICALLY GENERATED (DO NOT MODIFY)
+# ------------------------------------------------------
+
+input BooleanNullableFilter {
+  equals: Boolean
+  not: Boolean
+}
+
+input Credentials {
+  password: String!
+  username: String!
+}
+
+input FloatFilter {
+  equals: Float
+  gt: Float
+  gte: Float
+  in: [Float!]
+  lt: Float
+  lte: Float
+  not: Float
+  notIn: [Float!]
+}
+
+type HousingApplicant {
+  houseOfferingIId: HousingOffering
+  id: String!
+  isAccepted: Boolean
+  userId: User
+}
+
+input HousingApplicantCreateInput {
+  house_offeringI_id: HousingOfferingWhereUniqueInput!
+  isAccepted: Boolean
+  user_id: UserWhereUniqueInput!
+}
+
+input HousingApplicantCreateNestedManyWithoutHousingOfferingsInput {
+  connect: [HousingApplicantWhereUniqueInput!]
+}
+
+input HousingApplicantCreateNestedManyWithoutUsersInput {
+  connect: [HousingApplicantWhereUniqueInput!]
+}
+
+input HousingApplicantListRelationFilter {
+  every: HousingApplicantWhereInput
+  none: HousingApplicantWhereInput
+  some: HousingApplicantWhereInput
+}
+
+input HousingApplicantOrderByInput {
+  house_offeringI_idId: SortOrder
+  id: SortOrder
+  isAccepted: SortOrder
+  user_idId: SortOrder
+}
+
+input HousingApplicantUpdateInput {
+  house_offeringI_id: HousingOfferingWhereUniqueInput
+  isAccepted: Boolean
+  user_id: UserWhereUniqueInput
+}
+
+input HousingApplicantUpdateManyWithoutHousingOfferingsInput {
+  connect: [HousingApplicantWhereUniqueInput!]
+  disconnect: [HousingApplicantWhereUniqueInput!]
+  set: [HousingApplicantWhereUniqueInput!]
+}
+
+input HousingApplicantUpdateManyWithoutUsersInput {
+  connect: [HousingApplicantWhereUniqueInput!]
+  disconnect: [HousingApplicantWhereUniqueInput!]
+  set: [HousingApplicantWhereUniqueInput!]
+}
+
+input HousingApplicantWhereInput {
+  house_offeringI_id: HousingOfferingWhereUniqueInput
+  id: StringFilter
+  isAccepted: BooleanNullableFilter
+  user_id: UserWhereUniqueInput
+}
+
+input HousingApplicantWhereUniqueInput {
+  id: String!
+}
+
+type HousingOffering {
+  address: String!
+  authorId: User
+  city: String!
+  description: String!
+  housingApplicants(orderBy: [HousingApplicantOrderByInput!], skip: Float, take: Float, where: HousingApplicantWhereInput): [HousingApplicant!]!
+  id: String!
+  price: Float!
+  rooms_number: Float!
+  size: Float!
+  title: String!
+}
+
+input HousingOfferingCreateInput {
+  address: String!
+  author_id: UserWhereUniqueInput!
+  city: String!
+  description: String!
+  housingApplicants: HousingApplicantCreateNestedManyWithoutHousingOfferingsInput
+  price: Float!
+  rooms_number: Float!
+  size: Float!
+  title: String!
+}
+
+input HousingOfferingCreateNestedManyWithoutUsersInput {
+  connect: [HousingOfferingWhereUniqueInput!]
+}
+
+input HousingOfferingListRelationFilter {
+  every: HousingOfferingWhereInput
+  none: HousingOfferingWhereInput
+  some: HousingOfferingWhereInput
+}
+
+input HousingOfferingOrderByInput {
+  address: SortOrder
+  author_idId: SortOrder
+  city: SortOrder
+  description: SortOrder
+  id: SortOrder
+  price: SortOrder
+  rooms_number: SortOrder
+  size: SortOrder
+  title: SortOrder
+}
+
+input HousingOfferingUpdateInput {
+  address: String
+  author_id: UserWhereUniqueInput
+  city: String
+  description: String
+  housingApplicants: HousingApplicantUpdateManyWithoutHousingOfferingsInput
+  price: Float
+  rooms_number: Float
+  size: Float
+  title: String
+}
+
+input HousingOfferingUpdateManyWithoutUsersInput {
+  connect: [HousingOfferingWhereUniqueInput!]
+  disconnect: [HousingOfferingWhereUniqueInput!]
+  set: [HousingOfferingWhereUniqueInput!]
+}
+
+input HousingOfferingWhereInput {
+  address: StringFilter
+  author_id: UserWhereUniqueInput
+  city: StringFilter
+  description: StringFilter
+  housingApplicants: HousingApplicantListRelationFilter
+  id: StringFilter
+  price: IntFilter
+  rooms_number: IntFilter
+  size: FloatFilter
+  title: StringFilter
+}
+
+input HousingOfferingWhereUniqueInput {
+  id: String!
+}
+
+input IntFilter {
+  equals: Int
+  gt: Int
+  gte: Int
+  in: [Int!]
+  lt: Int
+  lte: Int
+  not: Int
+  notIn: [Int!]
+}
+
+input IntNullableFilter {
+  equals: Int
+  gt: Int
+  gte: Int
+  in: [Int!]
+  lt: Int
+  lte: Int
+  not: Int
+  notIn: [Int!]
+}
+
+type JobApplicant {
+  id: String!
+  isAccepted: Boolean
+  jobOfferingId: JobOffering
+  userId: User
+}
+
+input JobApplicantCreateInput {
+  isAccepted: Boolean
+  job_offering_id: JobOfferingWhereUniqueInput!
+  user_id: UserWhereUniqueInput!
+}
+
+input JobApplicantCreateNestedManyWithoutJobOfferingsInput {
+  connect: [JobApplicantWhereUniqueInput!]
+}
+
+input JobApplicantCreateNestedManyWithoutUsersInput {
+  connect: [JobApplicantWhereUniqueInput!]
+}
+
+input JobApplicantListRelationFilter {
+  every: JobApplicantWhereInput
+  none: JobApplicantWhereInput
+  some: JobApplicantWhereInput
+}
+
+input JobApplicantOrderByInput {
+  id: SortOrder
+  isAccepted: SortOrder
+  job_offering_idId: SortOrder
+  user_idId: SortOrder
+}
+
+input JobApplicantUpdateInput {
+  isAccepted: Boolean
+  job_offering_id: JobOfferingWhereUniqueInput
+  user_id: UserWhereUniqueInput
+}
+
+input JobApplicantUpdateManyWithoutJobOfferingsInput {
+  connect: [JobApplicantWhereUniqueInput!]
+  disconnect: [JobApplicantWhereUniqueInput!]
+  set: [JobApplicantWhereUniqueInput!]
+}
+
+input JobApplicantUpdateManyWithoutUsersInput {
+  connect: [JobApplicantWhereUniqueInput!]
+  disconnect: [JobApplicantWhereUniqueInput!]
+  set: [JobApplicantWhereUniqueInput!]
+}
+
+input JobApplicantWhereInput {
+  id: StringFilter
+  isAccepted: BooleanNullableFilter
+  job_offering_id: JobOfferingWhereUniqueInput
+  user_id: UserWhereUniqueInput
+}
+
+input JobApplicantWhereUniqueInput {
+  id: String!
+}
+
+type JobOffering {
+  authorId: User
+  city: String!
+  description: String!
+  id: String!
+  jobApplicants(orderBy: [JobApplicantOrderByInput!], skip: Float, take: Float, where: JobApplicantWhereInput): [JobApplicant!]!
+  max_salary: Float
+  min_salary: Float
+  position_level: String
+  title: String!
+  working_mode: String!
+}
+
+input JobOfferingCreateInput {
+  author_id: UserWhereUniqueInput!
+  city: String!
+  description: String!
+  job_applicants: JobApplicantCreateNestedManyWithoutJobOfferingsInput
+  max_salary: Float
+  min_salary: Float
+  position_level: String
+  title: String!
+  working_mode: String!
+}
+
+input JobOfferingCreateNestedManyWithoutUsersInput {
+  connect: [JobOfferingWhereUniqueInput!]
+}
+
+input JobOfferingListRelationFilter {
+  every: JobOfferingWhereInput
+  none: JobOfferingWhereInput
+  some: JobOfferingWhereInput
+}
+
+input JobOfferingOrderByInput {
+  author_idId: SortOrder
+  city: SortOrder
+  description: SortOrder
+  id: SortOrder
+  max_salary: SortOrder
+  min_salary: SortOrder
+  position_level: SortOrder
+  title: SortOrder
+  working_mode: SortOrder
+}
+
+input JobOfferingUpdateInput {
+  author_id: UserWhereUniqueInput
+  city: String
+  description: String
+  job_applicants: JobApplicantUpdateManyWithoutJobOfferingsInput
+  max_salary: Float
+  min_salary: Float
+  position_level: String
+  title: String
+  working_mode: String
+}
+
+input JobOfferingUpdateManyWithoutUsersInput {
+  connect: [JobOfferingWhereUniqueInput!]
+  disconnect: [JobOfferingWhereUniqueInput!]
+  set: [JobOfferingWhereUniqueInput!]
+}
+
+input JobOfferingWhereInput {
+  author_id: UserWhereUniqueInput
+  city: StringFilter
+  description: StringFilter
+  id: StringFilter
+  job_applicants: JobApplicantListRelationFilter
+  max_salary: IntNullableFilter
+  min_salary: IntNullableFilter
+  position_level: StringNullableFilter
+  title: StringFilter
+  working_mode: StringFilter
+}
+
+input JobOfferingWhereUniqueInput {
+  id: String!
+}
+
+type MetaQueryPayload {
+  count: Float!
+}
+
+type Mutation {
+  createHousingApplicant(data: HousingApplicantCreateInput!): HousingApplicant!
+  createHousingOffering(data: HousingOfferingCreateInput!): HousingOffering!
+  createJobApplicant(data: JobApplicantCreateInput!): JobApplicant!
+  createJobOffering(data: JobOfferingCreateInput!): JobOffering!
+  createUser(data: UserCreateInput!): User!
+  deleteHousingApplicant(where: HousingApplicantWhereUniqueInput!): HousingApplicant!
+  deleteHousingOffering(where: HousingOfferingWhereUniqueInput!): HousingOffering!
+  deleteJobApplicant(where: JobApplicantWhereUniqueInput!): JobApplicant!
+  deleteJobOffering(where: JobOfferingWhereUniqueInput!): JobOffering!
+  deleteUser(where: UserWhereUniqueInput!): User!
+  login(credentials: Credentials!): UserInfo!
+  updateHousingApplicant(data: HousingApplicantUpdateInput!, where: HousingApplicantWhereUniqueInput!): HousingApplicant!
+  updateHousingOffering(data: HousingOfferingUpdateInput!, where: HousingOfferingWhereUniqueInput!): HousingOffering!
+  updateJobApplicant(data: JobApplicantUpdateInput!, where: JobApplicantWhereUniqueInput!): JobApplicant!
+  updateJobOffering(data: JobOfferingUpdateInput!, where: JobOfferingWhereUniqueInput!): JobOffering!
+  updateUser(data: UserUpdateInput!, where: UserWhereUniqueInput!): User!
+}
+
+type Query {
+  _housingApplicantsMeta(orderBy: [HousingApplicantOrderByInput!], skip: Float, take: Float, where: HousingApplicantWhereInput): MetaQueryPayload!
+  _housingOfferingsMeta(orderBy: [HousingOfferingOrderByInput!], skip: Float, take: Float, where: HousingOfferingWhereInput): MetaQueryPayload!
+  _jobApplicantsMeta(orderBy: [JobApplicantOrderByInput!], skip: Float, take: Float, where: JobApplicantWhereInput): MetaQueryPayload!
+  _jobOfferingsMeta(orderBy: [JobOfferingOrderByInput!], skip: Float, take: Float, where: JobOfferingWhereInput): MetaQueryPayload!
+  _usersMeta(orderBy: [UserOrderByInput!], skip: Float, take: Float, where: UserWhereInput): MetaQueryPayload!
+  housingApplicant(where: HousingApplicantWhereUniqueInput!): HousingApplicant
+  housingApplicants(orderBy: [HousingApplicantOrderByInput!], skip: Float, take: Float, where: HousingApplicantWhereInput): [HousingApplicant!]!
+  housingOffering(where: HousingOfferingWhereUniqueInput!): HousingOffering
+  housingOfferings(orderBy: [HousingOfferingOrderByInput!], skip: Float, take: Float, where: HousingOfferingWhereInput): [HousingOffering!]!
+  jobApplicant(where: JobApplicantWhereUniqueInput!): JobApplicant
+  jobApplicants(orderBy: [JobApplicantOrderByInput!], skip: Float, take: Float, where: JobApplicantWhereInput): [JobApplicant!]!
+  jobOffering(where: JobOfferingWhereUniqueInput!): JobOffering
+  jobOfferings(orderBy: [JobOfferingOrderByInput!], skip: Float, take: Float, where: JobOfferingWhereInput): [JobOffering!]!
+  user(where: UserWhereUniqueInput!): User
+  userInfo: UserInfo!
+  users(orderBy: [UserOrderByInput!], skip: Float, take: Float, where: UserWhereInput): [User!]!
+}
+
+enum QueryMode {
+  Default
+  Insensitive
+}
+
+enum SortOrder {
+  Asc
+  Desc
+}
+
+input StringFilter {
+  contains: String
+  endsWith: String
+  equals: String
+  gt: String
+  gte: String
+  in: [String!]
+  lt: String
+  lte: String
+  mode: QueryMode
+  not: String
+  notIn: [String!]
+  startsWith: String
+}
+
+input StringNullableFilter {
+  contains: String
+  endsWith: String
+  equals: String
+  gt: String
+  gte: String
+  in: [String!]
+  lt: String
+  lte: String
+  mode: QueryMode
+  not: String
+  notIn: [String!]
+  startsWith: String
+}
+
+type User {
+  description: String
+  first_name: String
+  housingApplicants(orderBy: [HousingApplicantOrderByInput!], skip: Float, take: Float, where: HousingApplicantWhereInput): [HousingApplicant!]!
+  housingOfferings(orderBy: [HousingOfferingOrderByInput!], skip: Float, take: Float, where: HousingOfferingWhereInput): [HousingOffering!]!
+  id: String!
+  jobApplicants(orderBy: [JobApplicantOrderByInput!], skip: Float, take: Float, where: JobApplicantWhereInput): [JobApplicant!]!
+  jobOfferings(orderBy: [JobOfferingOrderByInput!], skip: Float, take: Float, where: JobOfferingWhereInput): [JobOffering!]!
+  last_name: String
+  location: String
+  roles: [String!]!
+  telephone_number: String
+  username: String!
+}
+
+input UserCreateInput {
+  description: String
+  first_name: String
+  housing_applicants: HousingApplicantCreateNestedManyWithoutUsersInput
+  housing_offerings: HousingOfferingCreateNestedManyWithoutUsersInput
+  job_applicants: JobApplicantCreateNestedManyWithoutUsersInput
+  job_offerings: JobOfferingCreateNestedManyWithoutUsersInput
+  last_name: String
+  location: String
+  password: String!
+  roles: [String!]!
+  telephone_number: String
+  username: String!
+}
+
+type UserInfo {
+  accessToken: String
+  roles: [String!]!
+  username: String!
+}
+
+input UserOrderByInput {
+  description: SortOrder
+  first_name: SortOrder
+  id: SortOrder
+  last_name: SortOrder
+  location: SortOrder
+  password: SortOrder
+  roles: SortOrder
+  telephone_number: SortOrder
+  username: SortOrder
+}
+
+input UserUpdateInput {
+  description: String
+  first_name: String
+  housing_applicants: HousingApplicantUpdateManyWithoutUsersInput
+  housing_offerings: HousingOfferingUpdateManyWithoutUsersInput
+  job_applicants: JobApplicantUpdateManyWithoutUsersInput
+  job_offerings: JobOfferingUpdateManyWithoutUsersInput
+  last_name: String
+  location: String
+  password: String
+  roles: [String!]
+  telephone_number: String
+  username: String
+}
+
+input UserWhereInput {
+  description: StringNullableFilter
+  first_name: StringNullableFilter
+  housing_applicants: HousingApplicantListRelationFilter
+  housing_offerings: HousingOfferingListRelationFilter
+  id: StringFilter
+  job_applicants: JobApplicantListRelationFilter
+  job_offerings: JobOfferingListRelationFilter
+  last_name: StringNullableFilter
+  location: StringNullableFilter
+  telephone_number: StringNullableFilter
+  username: StringFilter
+}
+
+input UserWhereUniqueInput {
+  id: String!
+}

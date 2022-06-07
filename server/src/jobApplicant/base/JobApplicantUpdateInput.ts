@@ -11,12 +11,23 @@ https://docs.amplication.com/docs/how-to/custom-code
   */
 import { InputType, Field } from "@nestjs/graphql";
 import { ApiProperty } from "@nestjs/swagger";
+import { IsBoolean, IsOptional, ValidateNested } from "class-validator";
 import { JobOfferingWhereUniqueInput } from "../../jobOffering/base/JobOfferingWhereUniqueInput";
-import { ValidateNested, IsOptional } from "class-validator";
 import { Type } from "class-transformer";
 import { UserWhereUniqueInput } from "../../user/base/UserWhereUniqueInput";
 @InputType()
 class JobApplicantUpdateInput {
+  @ApiProperty({
+    required: false,
+    type: Boolean,
+  })
+  @IsBoolean()
+  @IsOptional()
+  @Field(() => Boolean, {
+    nullable: true,
+  })
+  isAccepted?: boolean | null;
+
   @ApiProperty({
     required: false,
     type: () => JobOfferingWhereUniqueInput,

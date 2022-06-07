@@ -3,6 +3,7 @@ import {
   Edit,
   SimpleForm,
   EditProps,
+  BooleanInput,
   ReferenceInput,
   SelectInput,
 } from "react-admin";
@@ -13,6 +14,7 @@ export const JobApplicantEdit = (props: EditProps): React.ReactElement => {
   return (
     <Edit {...props}>
       <SimpleForm>
+        <BooleanInput label="isAccepted" source="isAccepted" />
         <ReferenceInput
           source="joboffering.id"
           reference="JobOffering"
