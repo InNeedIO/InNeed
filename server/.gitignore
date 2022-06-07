@@ -4,3 +4,5 @@
 /node_modules
 /dist
 .DS_Store
+/prisma/migrations/20220607212547_initial_version/migration.sql
+/prisma/migrations/migration_lock.toml
