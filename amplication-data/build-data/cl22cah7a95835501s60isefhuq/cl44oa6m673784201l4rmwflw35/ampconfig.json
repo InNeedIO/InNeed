@@ -1,0 +1,19 @@
+{
+  "dataServiceGeneratorVersion": "0.13.0",
+  "appInfo": {
+    "name": "InNeed",
+    "description": "",
+    "version": "lxh34mps",
+    "id": "cl22cah7a95835501s60isefhuq",
+    "url": "https://server.amplication.com/cl22cah7a95835501s60isefhuq",
+    "settings": {
+      "dbHost": "localhost",
+      "dbName": "",
+      "dbPassword": "admin",
+      "dbPort": 5432,
+      "dbUser": "admin",
+      "appId": "cl22cah7a95835501s60isefhuq",
+      "authProvider": "Jwt"
+    }
+  }
+}

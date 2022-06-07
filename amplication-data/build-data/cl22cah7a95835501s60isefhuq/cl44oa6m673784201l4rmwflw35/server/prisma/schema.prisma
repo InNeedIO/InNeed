@@ -1,0 +1,70 @@
+datasource postgres {
+  provider = "postgresql"
+  url      = env("POSTGRESQL_URL")
+}
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+model User {
+  description        String?
+  first_name         String?
+  housing_applicants HousingApplicant[]
+  housing_offerings  HousingOffering[]
+  id                 String             @id @default(cuid())
+  job_applicants     JobApplicant[]
+  job_offerings      JobOffering[]
+  last_name          String?
+  location           String?
+  password           String
+  roles              String[]
+  telephone_number   String?
+  username           String             @unique
+}
+
+model JobApplicant {
+  id                String      @id @default(cuid())
+  isAccepted        Boolean?
+  job_offering_id   JobOffering @relation(fields: [job_offering_idId], references: [id])
+  job_offering_idId String
+  user_id           User        @relation(fields: [user_idId], references: [id])
+  user_idId         String
+}
+
+model JobOffering {
+  author_id      User           @relation(fields: [author_idId], references: [id])
+  author_idId    String
+  city           String
+  description    String
+  id             String         @id @default(cuid())
+  job_applicants JobApplicant[]
+  max_salary     Int?
+  min_salary     Int?
+  position_level String?
+  title          String
+  working_mode   String
+}
+
+model HousingOffering {
+  address           String
+  author_id         User               @relation(fields: [author_idId], references: [id])
+  author_idId       String
+  city              String
+  description       String
+  housingApplicants HousingApplicant[]
+  id                String             @id @default(cuid())
+  price             Int
+  rooms_number      Int
+  size              Float
+  title             String
+}
+
+model HousingApplicant {
+  house_offeringI_id   HousingOffering @relation(fields: [house_offeringI_idId], references: [id])
+  house_offeringI_idId String
+  id                   String          @id @default(cuid())
+  isAccepted           Boolean?
+  user_id              User            @relation(fields: [user_idId], references: [id])
+  user_idId            String
+}
